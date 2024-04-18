@@ -5269,32 +5269,40 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['ChiSquare.
 ## 1.6. Neural Network Classification Gradient and Weight Updates <a class="anchor" id="1.6"></a>
 
 ### 1.6.1 Premodelling Data Description <a class="anchor" id="1.6.1"></a>
-1. Among the predictor variables determined to have a statistically significant difference between the means of the numeric measurements obtained from LOW and HIGH groups of the <span style="color: #FF0000">CANRAT</span> target variable, only 2 were retained with the highest absolute t-test statistic values with reported low p-values less than the significance level of 0.05.. 
+1. All the predictor variables determined to have a statistically significant difference between the means of the numeric measurements obtained from LOW and HIGH groups of the <span style="color: #FF0000">CANRAT</span> target variable were used for the subsequent modelling process.
     * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, Correlation.PValue=0.000
     * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">LIFEXP</span>: T.Test.Statistic=-10.979, Correlation.PValue=0.000  
+    * <span style="color: #FF0000">TUBINC</span>: T.Test.Statistic=+9.609, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">DTHCMD</span>: T.Test.Statistic=+8.376, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">CO2EMI</span>: T.Test.Statistic=-7.031, Correlation.PValue=0.000  
+    * <span style="color: #FF0000">URBPOP</span>: T.Test.Statistic=-6.541, Correlation.PValue=0.000   
+    * <span style="color: #FF0000">POPGRO</span>: T.Test.Statistic=+4.905, Correlation.PValue=0.000
+    * <span style="color: #FF0000">GHGEMI</span>: T.Test.Statistic=-2.243, Correlation.PValue=0.026
 
 
 ```python
 ##################################
-# Filtering certain numeric columns
-# and encoded categorical columns
-# after hypothesis testing
+# Assignining all numeric columns
+# as model predictors
 ##################################
-cancer_rate_premodelling = cancer_rate_preprocessed_combined.drop(['URBPOP', 'POPGRO', 'LIFEXP', 'TUBINC', 'DTHCMD', 'AGRLND', 'GHGEMI','FORARE', 'CO2EMI', 'POPDEN'], axis=1)
+cancer_rate_premodelling = cancer_rate_preprocessed_combined
 cancer_rate_premodelling.columns
 ```
 
 
 
 
-    Index(['GDPCAP', 'EPISCO', 'CANRAT'], dtype='object')
+    Index(['URBPOP', 'POPGRO', 'LIFEXP', 'TUBINC', 'DTHCMD', 'AGRLND', 'GHGEMI',
+           'FORARE', 'CO2EMI', 'POPDEN', 'GDPCAP', 'EPISCO', 'CANRAT'],
+          dtype='object')
 
 
 
 
 ```python
 ##################################
-# Performing a general exploration of the filtered dataset
+# Performing a general exploration of the pre-modelling dataset
 ##################################
 print('Dataset Dimensions: ')
 display(cancer_rate_premodelling.shape)
@@ -5304,7 +5312,7 @@ display(cancer_rate_premodelling.shape)
     
 
 
-    (163, 3)
+    (163, 13)
 
 
 
@@ -5320,6 +5328,16 @@ display(cancer_rate_premodelling.dtypes)
     
 
 
+    URBPOP     float64
+    POPGRO     float64
+    LIFEXP     float64
+    TUBINC     float64
+    DTHCMD     float64
+    AGRLND     float64
+    GHGEMI     float64
+    FORARE     float64
+    CO2EMI     float64
+    POPDEN     float64
     GDPCAP     float64
     EPISCO     float64
     CANRAT    category
@@ -5355,6 +5373,16 @@ cancer_rate_premodelling.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>URBPOP</th>
+      <th>POPGRO</th>
+      <th>LIFEXP</th>
+      <th>TUBINC</th>
+      <th>DTHCMD</th>
+      <th>AGRLND</th>
+      <th>GHGEMI</th>
+      <th>FORARE</th>
+      <th>CO2EMI</th>
+      <th>POPDEN</th>
       <th>GDPCAP</th>
       <th>EPISCO</th>
       <th>CANRAT</th>
@@ -5363,30 +5391,80 @@ cancer_rate_premodelling.head()
   <tbody>
     <tr>
       <th>0</th>
+      <td>1.186561</td>
+      <td>0.075944</td>
+      <td>1.643195</td>
+      <td>-1.102296</td>
+      <td>-0.971464</td>
+      <td>0.377324</td>
+      <td>1.388807</td>
+      <td>-0.467775</td>
+      <td>1.736841</td>
+      <td>-2.208974</td>
       <td>1.549766</td>
       <td>1.306738</td>
       <td>High</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>1.207291</td>
+      <td>0.916022</td>
+      <td>1.487969</td>
+      <td>-1.102296</td>
+      <td>-1.091413</td>
+      <td>0.043134</td>
+      <td>0.367038</td>
+      <td>0.398501</td>
+      <td>0.943507</td>
+      <td>-0.989532</td>
       <td>1.407752</td>
       <td>1.102912</td>
       <td>High</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>0.172100</td>
+      <td>-0.100235</td>
+      <td>1.537044</td>
+      <td>-1.275298</td>
+      <td>-0.836295</td>
+      <td>1.162279</td>
+      <td>0.211987</td>
+      <td>-0.815470</td>
+      <td>1.031680</td>
+      <td>-0.007131</td>
       <td>1.879374</td>
       <td>1.145832</td>
       <td>High</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>1.024859</td>
+      <td>-0.155217</td>
+      <td>0.664178</td>
+      <td>-1.696341</td>
+      <td>-0.903718</td>
+      <td>0.296508</td>
+      <td>2.565440</td>
+      <td>0.259803</td>
+      <td>1.627748</td>
+      <td>-0.522844</td>
       <td>1.685426</td>
       <td>0.739753</td>
       <td>High</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>1.271466</td>
+      <td>-0.718131</td>
+      <td>1.381877</td>
+      <td>-1.413414</td>
+      <td>-0.657145</td>
+      <td>1.162434</td>
+      <td>0.019979</td>
+      <td>-0.559264</td>
+      <td>0.686270</td>
+      <td>0.512619</td>
       <td>1.657777</td>
       <td>2.218327</td>
       <td>High</td>
@@ -5395,6 +5473,24 @@ cancer_rate_premodelling.head()
 </table>
 </div>
 
+
+
+
+```python
+##################################
+# Formulating a scatterplot matrix
+# of all pairwise combinations of 
+# numeric predictors labeled by
+# categorical response classes
+##################################
+sns.pairplot(cancer_rate_premodelling, hue='CANRAT')
+plt.show()
+```
+
+
+    
+![png](output_165_0.png)
+    
 
 
 
@@ -5409,43 +5505,11 @@ cancer_rate_premodelling_matrix = cancer_rate_premodelling.to_numpy()
 
 ```python
 ##################################
-# Formulating the scatterplot
-# of the selected numeric predictors
-# by categorical response classes
-##################################
-fig, ax = plt.subplots(figsize=(7, 7))
-ax.plot(cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='High', 0],
-        cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='High', 1], 
-        'o', 
-        label='High', 
-        color='darkslateblue')
-ax.plot(cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='Low', 0],
-        cancer_rate_premodelling_matrix[cancer_rate_premodelling_matrix[:,2]=='Low', 1], 
-        'x', 
-        label='Low', 
-        color='chocolate')
-ax.axes.set_ylabel('EPISCO')
-ax.axes.set_xlabel('GDPCAP')
-ax.set_xlim(-3,3)
-ax.set_ylim(-3,3)
-ax.set(title='CANRAT Class Distribution')
-ax.legend(loc='upper left',title='CANRAT');
-```
-
-
-    
-![png](output_166_0.png)
-    
-
-
-
-```python
-##################################
 # Preparing the data and
 # and converting to a suitable format
 # as a neural network model input
 ##################################
-matrix_x_values = cancer_rate_premodelling.iloc[:,0:2].to_numpy()
+matrix_x_values = cancer_rate_premodelling.iloc[:,0:12].to_numpy()
 y_values = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
 ```
 
