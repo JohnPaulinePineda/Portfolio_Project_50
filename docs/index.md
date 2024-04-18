@@ -5540,7 +5540,7 @@ output_size = 2
 # Defining the training parameters
 ##################################
 learning_rate = 0.01
-iterations = 1000
+iterations = 5001
 ```
 
 
@@ -5552,7 +5552,7 @@ def initialize_parameters(input_size, hidden_sizes, output_size):
     parameters = {}
     layer_sizes = [input_size] + hidden_sizes + [output_size]
     for i in range(1, len(layer_sizes)):
-        parameters[f'W{i}'] = np.random.randn(layer_sizes[i-1], layer_sizes[i]) * 0.01
+        parameters[f'W{i}'] = np.random.randn(layer_sizes[i-1], layer_sizes[i])
         parameters[f'b{i}'] = np.zeros((1, layer_sizes[i]))
     return parameters
 ```
@@ -5697,16 +5697,57 @@ for i in range(iterations):
 
 ```
 
-    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
-    Iteration 100: Cost = 0.6147654003943768, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.5849890742037946, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.5730376060537729, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.5680074825468361, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.5658158801975834, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.5648377437853757, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.5643939216770197, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.5641902551849223, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.5640960709646553, Accuracy = 0.7484662576687117
+    Iteration 0: Cost = 2.697666855917751, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.41408424670611343, Accuracy = 0.7730061349693251
+    Iteration 200: Cost = 0.36050381831537776, Accuracy = 0.8098159509202454
+    Iteration 300: Cost = 0.3409328635869905, Accuracy = 0.8282208588957055
+    Iteration 400: Cost = 0.32363203848885536, Accuracy = 0.8343558282208589
+    Iteration 500: Cost = 0.3115070192629362, Accuracy = 0.8343558282208589
+    Iteration 600: Cost = 0.3023314238258977, Accuracy = 0.8343558282208589
+    Iteration 700: Cost = 0.29363598152700054, Accuracy = 0.8404907975460123
+    Iteration 800: Cost = 0.2848836019920113, Accuracy = 0.8466257668711656
+    Iteration 900: Cost = 0.27736597680916786, Accuracy = 0.852760736196319
+    Iteration 1000: Cost = 0.2653137529567768, Accuracy = 0.8588957055214724
+    Iteration 1100: Cost = 0.25555029194769596, Accuracy = 0.8650306748466258
+    Iteration 1200: Cost = 0.24882811399084573, Accuracy = 0.8711656441717791
+    Iteration 1300: Cost = 0.24113380770629153, Accuracy = 0.8773006134969326
+    Iteration 1400: Cost = 0.23501341150148566, Accuracy = 0.8834355828220859
+    Iteration 1500: Cost = 0.22495034628757427, Accuracy = 0.8957055214723927
+    Iteration 1600: Cost = 0.21536590162488609, Accuracy = 0.9141104294478528
+    Iteration 1700: Cost = 0.20432068181344978, Accuracy = 0.9202453987730062
+    Iteration 1800: Cost = 0.19719200217330904, Accuracy = 0.9263803680981595
+    Iteration 1900: Cost = 0.187938775078038, Accuracy = 0.9325153374233128
+    Iteration 2000: Cost = 0.18051546566283025, Accuracy = 0.9325153374233128
+    Iteration 2100: Cost = 0.17318771441899924, Accuracy = 0.9325153374233128
+    Iteration 2200: Cost = 0.16625767748716608, Accuracy = 0.9325153374233128
+    Iteration 2300: Cost = 0.159554362873617, Accuracy = 0.9447852760736196
+    Iteration 2400: Cost = 0.15422971309750588, Accuracy = 0.9447852760736196
+    Iteration 2500: Cost = 0.1496144044081217, Accuracy = 0.9447852760736196
+    Iteration 2600: Cost = 0.1458907036005679, Accuracy = 0.950920245398773
+    Iteration 2700: Cost = 0.1426419035911997, Accuracy = 0.950920245398773
+    Iteration 2800: Cost = 0.13982850000990404, Accuracy = 0.950920245398773
+    Iteration 2900: Cost = 0.1372934755110789, Accuracy = 0.950920245398773
+    Iteration 3000: Cost = 0.13488797338930889, Accuracy = 0.950920245398773
+    Iteration 3100: Cost = 0.1325151755003066, Accuracy = 0.950920245398773
+    Iteration 3200: Cost = 0.13029415417115042, Accuracy = 0.950920245398773
+    Iteration 3300: Cost = 0.12817138757536664, Accuracy = 0.950920245398773
+    Iteration 3400: Cost = 0.12604887370941137, Accuracy = 0.950920245398773
+    Iteration 3500: Cost = 0.12399471271214067, Accuracy = 0.950920245398773
+    Iteration 3600: Cost = 0.12216487828003175, Accuracy = 0.950920245398773
+    Iteration 3700: Cost = 0.12041215534575572, Accuracy = 0.950920245398773
+    Iteration 3800: Cost = 0.11853104362054118, Accuracy = 0.950920245398773
+    Iteration 3900: Cost = 0.11680543643802871, Accuracy = 0.9570552147239264
+    Iteration 4000: Cost = 0.11519293611170889, Accuracy = 0.9570552147239264
+    Iteration 4100: Cost = 0.11374680595689173, Accuracy = 0.9570552147239264
+    Iteration 4200: Cost = 0.11251542409757725, Accuracy = 0.9570552147239264
+    Iteration 4300: Cost = 0.1113883391343571, Accuracy = 0.9570552147239264
+    Iteration 4400: Cost = 0.11033641658749482, Accuracy = 0.9570552147239264
+    Iteration 4500: Cost = 0.10933351600035265, Accuracy = 0.9570552147239264
+    Iteration 4600: Cost = 0.1083888669882344, Accuracy = 0.9570552147239264
+    Iteration 4700: Cost = 0.1074930635640434, Accuracy = 0.9570552147239264
+    Iteration 4800: Cost = 0.1066130284979297, Accuracy = 0.9570552147239264
+    Iteration 4900: Cost = 0.10576854294924885, Accuracy = 0.9570552147239264
+    Iteration 5000: Cost = 0.10493711630916876, Accuracy = 0.9570552147239264
     
 
 
@@ -5714,18 +5755,18 @@ for i in range(iterations):
 ##################################
 # Plotting cost and accuracy profiles
 ##################################
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(15, 4.75))
 plt.subplot(1, 2, 1)
 plt.plot(range(iterations), costs)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
-plt.title('Cost vs Iterations')
+plt.title('No Regularization: Cost Function by Iteration')
 
 plt.subplot(1, 2, 2)
 plt.plot(range(iterations), accuracies)
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('Accuracy vs Iterations')
+plt.title('No Regularization: Classification Accuracy by Iteration')
 
 plt.show()
 ```
@@ -5745,10 +5786,14 @@ num_layers = len(hidden_sizes) + 1
 plt.figure(figsize=(15, 10))
 for i in range(1, num_layers + 1):
     plt.subplot(2, num_layers // 2, i)
-    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.plot(range(iterations), [np.max(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Maximum Weight")
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Mean Weight")
+    plt.plot(range(iterations), [np.min(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Minimum Weight")
+    plt.ylim([-1,5])
+    plt.legend(loc="upper right")
     plt.xlabel('Iterations')
     plt.ylabel('Average Absolute Weight')
-    plt.title(f'Layer {i} Weights vs Iterations')
+    plt.title(f'No Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
 ```
@@ -5797,7 +5842,7 @@ parameters = initialize_parameters(input_size, hidden_sizes, output_size)
 ##################################
 # Initializing regularization parameters
 ##################################
-lambd = 0.10
+lambd = 0.01
 
 ##################################
 # Creating lists to store cost and accuracy for plotting
@@ -5812,7 +5857,7 @@ weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
 
 ##################################
 # Training a neural network model
-# using no regularization
+# using L1 regularization
 ##################################
 for i in range(iterations):
     # Implementing forward propagation
@@ -5842,16 +5887,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
-    Iteration 100: Cost = 0.6147665934215493, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.5849901108813963, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.5730383193435081, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.5680079307308525, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.5658161478239907, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.5648378983024844, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.5643940087994682, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.5641903035139325, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.5640960975306429, Accuracy = 0.7484662576687117
+    Iteration 0: Cost = 2.697666855917751, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.41626302221749795, Accuracy = 0.7791411042944786
+    Iteration 200: Cost = 0.36353454828054904, Accuracy = 0.8098159509202454
+    Iteration 300: Cost = 0.3448212236762516, Accuracy = 0.8159509202453987
+    Iteration 400: Cost = 0.3315071945348825, Accuracy = 0.8282208588957055
+    Iteration 500: Cost = 0.3220212810671461, Accuracy = 0.8343558282208589
+    Iteration 600: Cost = 0.31424515359884847, Accuracy = 0.8343558282208589
+    Iteration 700: Cost = 0.3075189826293002, Accuracy = 0.8343558282208589
+    Iteration 800: Cost = 0.30151122986919615, Accuracy = 0.8466257668711656
+    Iteration 900: Cost = 0.2901729266884557, Accuracy = 0.8588957055214724
+    Iteration 1000: Cost = 0.278130114089924, Accuracy = 0.8711656441717791
+    Iteration 1100: Cost = 0.2685975326315194, Accuracy = 0.8711656441717791
+    Iteration 1200: Cost = 0.25923686484344605, Accuracy = 0.8834355828220859
+    Iteration 1300: Cost = 0.2468203503921596, Accuracy = 0.8895705521472392
+    Iteration 1400: Cost = 0.23643300820647523, Accuracy = 0.8957055214723927
+    Iteration 1500: Cost = 0.22479785561553003, Accuracy = 0.9079754601226994
+    Iteration 1600: Cost = 0.21443061867349272, Accuracy = 0.9263803680981595
+    Iteration 1700: Cost = 0.20583512593219153, Accuracy = 0.9263803680981595
+    Iteration 1800: Cost = 0.1980660366211159, Accuracy = 0.9263803680981595
+    Iteration 1900: Cost = 0.1912259780707893, Accuracy = 0.9263803680981595
+    Iteration 2000: Cost = 0.1830591667984694, Accuracy = 0.9386503067484663
+    Iteration 2100: Cost = 0.175660565662474, Accuracy = 0.9386503067484663
+    Iteration 2200: Cost = 0.16910444803673036, Accuracy = 0.9447852760736196
+    Iteration 2300: Cost = 0.1635768396990075, Accuracy = 0.950920245398773
+    Iteration 2400: Cost = 0.15841785844247167, Accuracy = 0.950920245398773
+    Iteration 2500: Cost = 0.15359636350208525, Accuracy = 0.950920245398773
+    Iteration 2600: Cost = 0.14930250528590808, Accuracy = 0.950920245398773
+    Iteration 2700: Cost = 0.14519377767990452, Accuracy = 0.950920245398773
+    Iteration 2800: Cost = 0.14210759156434224, Accuracy = 0.950920245398773
+    Iteration 2900: Cost = 0.13919717159241476, Accuracy = 0.950920245398773
+    Iteration 3000: Cost = 0.13638275201276442, Accuracy = 0.950920245398773
+    Iteration 3100: Cost = 0.13350358172976, Accuracy = 0.9570552147239264
+    Iteration 3200: Cost = 0.1310067599837977, Accuracy = 0.9570552147239264
+    Iteration 3300: Cost = 0.12884234145124543, Accuracy = 0.9570552147239264
+    Iteration 3400: Cost = 0.12689799466006946, Accuracy = 0.9570552147239264
+    Iteration 3500: Cost = 0.1252089711994336, Accuracy = 0.9631901840490797
+    Iteration 3600: Cost = 0.12369398039136276, Accuracy = 0.9631901840490797
+    Iteration 3700: Cost = 0.12052229680368642, Accuracy = 0.9631901840490797
+    Iteration 3800: Cost = 0.11760369229885545, Accuracy = 0.9631901840490797
+    Iteration 3900: Cost = 0.11505743039290964, Accuracy = 0.9631901840490797
+    Iteration 4000: Cost = 0.11284018874329867, Accuracy = 0.9631901840490797
+    Iteration 4100: Cost = 0.111640564904966, Accuracy = 0.9631901840490797
+    Iteration 4200: Cost = 0.11050586592821872, Accuracy = 0.9631901840490797
+    Iteration 4300: Cost = 0.10509664547717024, Accuracy = 0.9693251533742331
+    Iteration 4400: Cost = 0.1008119354484496, Accuracy = 0.9693251533742331
+    Iteration 4500: Cost = 0.09932408383661405, Accuracy = 0.9693251533742331
+    Iteration 4600: Cost = 0.09755489171635684, Accuracy = 0.9754601226993865
+    Iteration 4700: Cost = 0.09606532970964736, Accuracy = 0.9754601226993865
+    Iteration 4800: Cost = 0.09486812346746003, Accuracy = 0.9754601226993865
+    Iteration 4900: Cost = 0.09390112228124105, Accuracy = 0.9754601226993865
+    Iteration 5000: Cost = 0.09310704429035692, Accuracy = 0.9754601226993865
     
 
 
@@ -5859,18 +5945,18 @@ for i in range(iterations):
 ##################################
 # Plotting cost and accuracy profiles
 ##################################
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(15, 4.75))
 plt.subplot(1, 2, 1)
 plt.plot(range(iterations), costs)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
-plt.title('Cost vs Iterations')
+plt.title('L1 Regularization: Cost Function by Iteration')
 
 plt.subplot(1, 2, 2)
 plt.plot(range(iterations), accuracies)
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('Accuracy vs Iterations')
+plt.title('L1 Regularization: Classification Accuracy by Iteration')
 
 plt.show()
 ```
@@ -5890,10 +5976,14 @@ num_layers = len(hidden_sizes) + 1
 plt.figure(figsize=(15, 10))
 for i in range(1, num_layers + 1):
     plt.subplot(2, num_layers // 2, i)
-    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.plot(range(iterations), [np.max(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Maximum Weight")
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Mean Weight")
+    plt.plot(range(iterations), [np.min(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Minimum Weight")
+    plt.ylim([-1,5])
+    plt.legend(loc="upper right")
     plt.xlabel('Iterations')
     plt.ylabel('Average Absolute Weight')
-    plt.title(f'Layer {i} Weights vs Iterations')
+    plt.title(f'L1 Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
 ```
@@ -5921,7 +6011,7 @@ plt.show()
 ##################################
 def update_parameters_l2(parameters, gradients, learning_rate, lambd):
     for i in range(1, len(parameters) // 2 + 1):
-        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}']**2)
+        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}'])
         parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
     return parameters
 ```
@@ -5942,7 +6032,7 @@ parameters = initialize_parameters(input_size, hidden_sizes, output_size)
 ##################################
 # Initializing regularization parameters
 ##################################
-lambd = 0.10
+lambd = 0.01
 
 ##################################
 # Creating lists to store cost and accuracy for plotting
@@ -5957,7 +6047,7 @@ weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
 
 ##################################
 # Training a neural network model
-# using no regularization
+# using L2 regularization
 ##################################
 for i in range(iterations):
     # Implementing forward propagation
@@ -5987,16 +6077,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
-    Iteration 100: Cost = 0.6147653982394352, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.5849890702759111, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.573037601809294, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.5680074787965406, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.5658158772150285, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.5648377415579665, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.564393920079815, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.5641902540697863, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.5640960701999824, Accuracy = 0.7484662576687117
+    Iteration 0: Cost = 2.697666855917751, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.4142697371861853, Accuracy = 0.7791411042944786
+    Iteration 200: Cost = 0.3626651959992065, Accuracy = 0.8098159509202454
+    Iteration 300: Cost = 0.3433869920512977, Accuracy = 0.8282208588957055
+    Iteration 400: Cost = 0.3287214308372518, Accuracy = 0.8282208588957055
+    Iteration 500: Cost = 0.3189594398035219, Accuracy = 0.8343558282208589
+    Iteration 600: Cost = 0.3108224085924173, Accuracy = 0.8343558282208589
+    Iteration 700: Cost = 0.30343778368874036, Accuracy = 0.8343558282208589
+    Iteration 800: Cost = 0.29289994119539914, Accuracy = 0.852760736196319
+    Iteration 900: Cost = 0.2801308846442662, Accuracy = 0.8650306748466258
+    Iteration 1000: Cost = 0.2701102010986596, Accuracy = 0.8650306748466258
+    Iteration 1100: Cost = 0.2599266938680567, Accuracy = 0.8773006134969326
+    Iteration 1200: Cost = 0.24402703627500166, Accuracy = 0.901840490797546
+    Iteration 1300: Cost = 0.23024756635081176, Accuracy = 0.9079754601226994
+    Iteration 1400: Cost = 0.22002703869103168, Accuracy = 0.9202453987730062
+    Iteration 1500: Cost = 0.2118208073790209, Accuracy = 0.9202453987730062
+    Iteration 1600: Cost = 0.20065868273229406, Accuracy = 0.9263803680981595
+    Iteration 1700: Cost = 0.19069348146597315, Accuracy = 0.9263803680981595
+    Iteration 1800: Cost = 0.18168614843608347, Accuracy = 0.9447852760736196
+    Iteration 1900: Cost = 0.1747260044185223, Accuracy = 0.9447852760736196
+    Iteration 2000: Cost = 0.1670451051047514, Accuracy = 0.9447852760736196
+    Iteration 2100: Cost = 0.16006222062587264, Accuracy = 0.9447852760736196
+    Iteration 2200: Cost = 0.15418576728607855, Accuracy = 0.9447852760736196
+    Iteration 2300: Cost = 0.14901915293756823, Accuracy = 0.950920245398773
+    Iteration 2400: Cost = 0.14440332607934653, Accuracy = 0.950920245398773
+    Iteration 2500: Cost = 0.14009385569364008, Accuracy = 0.950920245398773
+    Iteration 2600: Cost = 0.13630516538989146, Accuracy = 0.950920245398773
+    Iteration 2700: Cost = 0.13284411555317963, Accuracy = 0.9570552147239264
+    Iteration 2800: Cost = 0.129734029825758, Accuracy = 0.9570552147239264
+    Iteration 2900: Cost = 0.12686003341856833, Accuracy = 0.9570552147239264
+    Iteration 3000: Cost = 0.12420452406614978, Accuracy = 0.9570552147239264
+    Iteration 3100: Cost = 0.12173441828929722, Accuracy = 0.9631901840490797
+    Iteration 3200: Cost = 0.11945490902700603, Accuracy = 0.9631901840490797
+    Iteration 3300: Cost = 0.1172931507391508, Accuracy = 0.9631901840490797
+    Iteration 3400: Cost = 0.11522311257607219, Accuracy = 0.9631901840490797
+    Iteration 3500: Cost = 0.11332280322147142, Accuracy = 0.9631901840490797
+    Iteration 3600: Cost = 0.1117128415905888, Accuracy = 0.9631901840490797
+    Iteration 3700: Cost = 0.11024038801912496, Accuracy = 0.9631901840490797
+    Iteration 3800: Cost = 0.10888128737568682, Accuracy = 0.9631901840490797
+    Iteration 3900: Cost = 0.10760862498962628, Accuracy = 0.9631901840490797
+    Iteration 4000: Cost = 0.10642724934192473, Accuracy = 0.9631901840490797
+    Iteration 4100: Cost = 0.10531702658937112, Accuracy = 0.9631901840490797
+    Iteration 4200: Cost = 0.10426965669087769, Accuracy = 0.9631901840490797
+    Iteration 4300: Cost = 0.10327606467713377, Accuracy = 0.9631901840490797
+    Iteration 4400: Cost = 0.10232054549904085, Accuracy = 0.9631901840490797
+    Iteration 4500: Cost = 0.10140317165287924, Accuracy = 0.9631901840490797
+    Iteration 4600: Cost = 0.10051008351315685, Accuracy = 0.9631901840490797
+    Iteration 4700: Cost = 0.0996103138345783, Accuracy = 0.9631901840490797
+    Iteration 4800: Cost = 0.09866179273254819, Accuracy = 0.9631901840490797
+    Iteration 4900: Cost = 0.0977596281073285, Accuracy = 0.9631901840490797
+    Iteration 5000: Cost = 0.09686175569995421, Accuracy = 0.9631901840490797
     
 
 
@@ -6004,18 +6135,18 @@ for i in range(iterations):
 ##################################
 # Plotting cost and accuracy profiles
 ##################################
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(15, 4.75))
 plt.subplot(1, 2, 1)
 plt.plot(range(iterations), costs)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
-plt.title('Cost vs Iterations')
+plt.title('L2 Regularization: Cost Function by Iteration')
 
 plt.subplot(1, 2, 2)
 plt.plot(range(iterations), accuracies)
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('Accuracy vs Iterations')
+plt.title('L2 Regularization: Classification Accuracy by Iteration')
 
 plt.show()
 ```
@@ -6035,10 +6166,14 @@ num_layers = len(hidden_sizes) + 1
 plt.figure(figsize=(15, 10))
 for i in range(1, num_layers + 1):
     plt.subplot(2, num_layers // 2, i)
-    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.plot(range(iterations), [np.max(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Maximum Weight")
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Mean Weight")
+    plt.plot(range(iterations), [np.min(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Minimum Weight")
+    plt.ylim([-1,5])
+    plt.legend(loc="upper right")
     plt.xlabel('Iterations')
     plt.ylabel('Average Absolute Weight')
-    plt.title(f'Layer {i} Weights vs Iterations')
+    plt.title(f'L2 Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
 ```
@@ -6065,7 +6200,7 @@ plt.show()
 ##################################
 def update_parameters_elastic(parameters, gradients, learning_rate, lambd):
     for i in range(1, len(parameters) // 2 + 1):
-        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}']**2 + lambd * np.sign(parameters[f'W{i}']))
+        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}'] + lambd * np.sign(parameters[f'W{i}']))
         parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
     return parameters
 ```
@@ -6086,7 +6221,7 @@ parameters = initialize_parameters(input_size, hidden_sizes, output_size)
 ##################################
 # Initializing regularization parameters
 ##################################
-lambd = 0.10
+lambd = 0.01
 
 ##################################
 # Creating lists to store cost and accuracy for plotting
@@ -6101,7 +6236,7 @@ weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
 
 ##################################
 # Training a neural network model
-# using no regularization
+# using ElasticNet regularization
 ##################################
 for i in range(iterations):
     # Implementing forward propagation
@@ -6131,16 +6266,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
-    Iteration 100: Cost = 0.6147665934269161, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.5849901108886193, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.5730383193497689, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.5680079307356958, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.5658161478275668, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.5648378983050625, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.5643940088013006, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.564190303515223, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.564096097531546, Accuracy = 0.7484662576687117
+    Iteration 0: Cost = 2.697666855917751, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.4164726084437436, Accuracy = 0.7791411042944786
+    Iteration 200: Cost = 0.3657243525212556, Accuracy = 0.8098159509202454
+    Iteration 300: Cost = 0.34758717097151814, Accuracy = 0.8159509202453987
+    Iteration 400: Cost = 0.33681075579432984, Accuracy = 0.8220858895705522
+    Iteration 500: Cost = 0.3234529226109136, Accuracy = 0.8343558282208589
+    Iteration 600: Cost = 0.31255318788596725, Accuracy = 0.852760736196319
+    Iteration 700: Cost = 0.30348285588183826, Accuracy = 0.8650306748466258
+    Iteration 800: Cost = 0.2944523212038217, Accuracy = 0.8650306748466258
+    Iteration 900: Cost = 0.28332167446115336, Accuracy = 0.8773006134969326
+    Iteration 1000: Cost = 0.2649218651301544, Accuracy = 0.8834355828220859
+    Iteration 1100: Cost = 0.25163365861879533, Accuracy = 0.8895705521472392
+    Iteration 1200: Cost = 0.24242651915635496, Accuracy = 0.9079754601226994
+    Iteration 1300: Cost = 0.2324353468150469, Accuracy = 0.9079754601226994
+    Iteration 1400: Cost = 0.2215472987517386, Accuracy = 0.9141104294478528
+    Iteration 1500: Cost = 0.2103387287533256, Accuracy = 0.9263803680981595
+    Iteration 1600: Cost = 0.1983305537778695, Accuracy = 0.9325153374233128
+    Iteration 1700: Cost = 0.18766826461857886, Accuracy = 0.9447852760736196
+    Iteration 1800: Cost = 0.17869729238444668, Accuracy = 0.950920245398773
+    Iteration 1900: Cost = 0.172128607463361, Accuracy = 0.950920245398773
+    Iteration 2000: Cost = 0.1661377611033335, Accuracy = 0.950920245398773
+    Iteration 2100: Cost = 0.16076490633515939, Accuracy = 0.950920245398773
+    Iteration 2200: Cost = 0.1561176838716242, Accuracy = 0.950920245398773
+    Iteration 2300: Cost = 0.1519259365651828, Accuracy = 0.950920245398773
+    Iteration 2400: Cost = 0.14851685664139466, Accuracy = 0.950920245398773
+    Iteration 2500: Cost = 0.14589730857037356, Accuracy = 0.950920245398773
+    Iteration 2600: Cost = 0.14384499459497277, Accuracy = 0.950920245398773
+    Iteration 2700: Cost = 0.14121455079157091, Accuracy = 0.950920245398773
+    Iteration 2800: Cost = 0.13331169847717983, Accuracy = 0.950920245398773
+    Iteration 2900: Cost = 0.12870010500111187, Accuracy = 0.950920245398773
+    Iteration 3000: Cost = 0.12501412960690048, Accuracy = 0.9570552147239264
+    Iteration 3100: Cost = 0.12118242582018846, Accuracy = 0.950920245398773
+    Iteration 3200: Cost = 0.11860409047528665, Accuracy = 0.9693251533742331
+    Iteration 3300: Cost = 0.11678015055596118, Accuracy = 0.9693251533742331
+    Iteration 3400: Cost = 0.11520320644290769, Accuracy = 0.9693251533742331
+    Iteration 3500: Cost = 0.11376654911033672, Accuracy = 0.9693251533742331
+    Iteration 3600: Cost = 0.11248505904359289, Accuracy = 0.9693251533742331
+    Iteration 3700: Cost = 0.1114873189603466, Accuracy = 0.9693251533742331
+    Iteration 3800: Cost = 0.11055038784367316, Accuracy = 0.9693251533742331
+    Iteration 3900: Cost = 0.10961614923842111, Accuracy = 0.9693251533742331
+    Iteration 4000: Cost = 0.10871098585156552, Accuracy = 0.9693251533742331
+    Iteration 4100: Cost = 0.10778930024086188, Accuracy = 0.9693251533742331
+    Iteration 4200: Cost = 0.10685468475004999, Accuracy = 0.9693251533742331
+    Iteration 4300: Cost = 0.10582877119481834, Accuracy = 0.9693251533742331
+    Iteration 4400: Cost = 0.10464405753844191, Accuracy = 0.9693251533742331
+    Iteration 4500: Cost = 0.10353649800299974, Accuracy = 0.9693251533742331
+    Iteration 4600: Cost = 0.10244640167547031, Accuracy = 0.9693251533742331
+    Iteration 4700: Cost = 0.1004530430076059, Accuracy = 0.9693251533742331
+    Iteration 4800: Cost = 0.09899993947623474, Accuracy = 0.9754601226993865
+    Iteration 4900: Cost = 0.0978570292712685, Accuracy = 0.9754601226993865
+    Iteration 5000: Cost = 0.09680155965463036, Accuracy = 0.9693251533742331
     
 
 
@@ -6148,18 +6324,18 @@ for i in range(iterations):
 ##################################
 # Plotting cost and accuracy profiles
 ##################################
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(15, 4.75))
 plt.subplot(1, 2, 1)
 plt.plot(range(iterations), costs)
 plt.xlabel('Iterations')
 plt.ylabel('Cost')
-plt.title('Cost vs Iterations')
+plt.title('ElasticNet Regularization: Cost Function by Iteration')
 
 plt.subplot(1, 2, 2)
 plt.plot(range(iterations), accuracies)
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('Accuracy vs Iterations')
+plt.title('ElasticNet Regularization: Classification Accuracy by Iteration')
 
 plt.show()
 ```
@@ -6179,10 +6355,14 @@ num_layers = len(hidden_sizes) + 1
 plt.figure(figsize=(15, 10))
 for i in range(1, num_layers + 1):
     plt.subplot(2, num_layers // 2, i)
-    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.plot(range(iterations), [np.max(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Maximum Weight")
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Mean Weight")
+    plt.plot(range(iterations), [np.min(np.abs(weights)) for weights in weight_history[f'W{i}']], label="Minimum Weight")
+    plt.ylim([-1,5])
+    plt.legend(loc="upper right")
     plt.xlabel('Iterations')
     plt.ylabel('Average Absolute Weight')
-    plt.title(f'Layer {i} Weights vs Iterations')
+    plt.title(f'ElasticNet Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
 ```
@@ -6281,6 +6461,7 @@ plt.show()
 * **[Article]** [Activation Functions in Neural Networks](https://towardsdatascience.com/activation-functions-neural-networks-1cbd9f8d91d6) by Sagar Sharma (Towards Data Science)
 * **[Article]** [A Practical Comparison of Activation Functions](https://becominghuman.ai/a-practical-comparison-of-activation-functions-6f348be7d274) by Danny Denenberg (Medium)
 * **[Article]** [What is an Activation Function? A Complete Guide](https://blog.roboflow.com/activation-function-computer-vision/#:~:text=Petru%20Potrimba,of%20deep%20learning%20model%20outputs.) by Petru Potrimba (RoboFlow.Com)
+* **[Article]** [L1, L2 and Elastic Net Regularization in Neural Networks (A Deep Dive)](https://www.pinecone.io/learn/regularization-in-neural-networks/) by Francesco Franco (AI.Mind.SO)
 * **[Article]** [Regularization in Neural Networks](https://www.pinecone.io/learn/regularization-in-neural-networks/) by Bala Priya (PineCone.IO)
 * **[Article]** [Regularization in Deep Learning — L1, L2, and Dropout](https://towardsdatascience.com/regularization-in-deep-learning-l1-l2-and-dropout-377e75acc036) by Artem Oppermann (Towards Data Science)
 * **[Article]** [Regularization Techniques for Training Deep Neural Networks](https://theaisummer.com/regularization/) bySergios Karagiannakos (TheAISummer.Com)
