@@ -5510,7 +5510,9 @@ cancer_rate_premodelling_matrix = cancer_rate_premodelling.to_numpy()
 # as a neural network model input
 ##################################
 matrix_x_values = cancer_rate_premodelling.iloc[:,0:12].to_numpy()
-y_values = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
+y_values_series = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
+y_values = pd.get_dummies(y_values_series)
+y_values = y_values.to_numpy()
 ```
 
 ### 1.6.2 No Regularization <a class="anchor" id="1.6.2"></a>
@@ -5522,6 +5524,241 @@ y_values = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
 [No Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) provides no additional constraints or penalties imposed on the model's parameters (weights and biases) during training. The model is free to learn complex patterns in the training data without any restrictions. Without regularization, the neural network may have a tendency to memorize noise or irrelevant patterns present in the training data. This can result in a highly complex model with large weights and intricate decision boundaries. Due to the lack of constraints on model complexity, there is a higher risk of overfitting when the model captures noise or idiosyncrasies in the training set rather than learning the underlying patterns of the data. In effect, the model may perform well on the training data but poorly on new, unseen data. 
 
 
+
+```python
+##################################
+# Defining the neural network architecture
+##################################
+input_size = 12
+hidden_sizes = [5, 5, 5]
+output_size = 2
+```
+
+
+```python
+##################################
+# Defining the training parameters
+##################################
+learning_rate = 0.01
+iterations = 1000
+```
+
+
+```python
+##################################
+# Initializing model weights and biases
+##################################
+def initialize_parameters(input_size, hidden_sizes, output_size):
+    parameters = {}
+    layer_sizes = [input_size] + hidden_sizes + [output_size]
+    for i in range(1, len(layer_sizes)):
+        parameters[f'W{i}'] = np.random.randn(layer_sizes[i-1], layer_sizes[i]) * 0.01
+        parameters[f'b{i}'] = np.zeros((1, layer_sizes[i]))
+    return parameters
+```
+
+
+```python
+##################################
+# Defining the activation function (ReLU)
+##################################
+def relu(x):
+    return np.maximum(0, x)
+```
+
+
+```python
+##################################
+# Defining the activation function (Sigmoid)
+##################################
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+```
+
+
+```python
+##################################
+# Defining the Softmax function
+##################################
+def softmax(x):
+    exps = np.exp(x - np.max(x, axis=1, keepdims=True))
+    return exps / np.sum(exps, axis=1, keepdims=True)
+```
+
+
+```python
+##################################
+# Defining the Forward propagation algorithm
+##################################
+def forward_propagation(X, parameters):
+    cache = {'A0': X}
+    for i in range(1, len(parameters) // 2 + 1):
+        cache[f'Z{i}'] = np.dot(cache[f'A{i-1}'], parameters[f'W{i}']) + parameters[f'b{i}']
+        cache[f'A{i}'] = relu(cache[f'Z{i}']) if i != len(parameters) // 2 else softmax(cache[f'Z{i}'])
+    return cache
+```
+
+
+```python
+##################################
+# Defining the Backward propagation algorithm
+##################################
+def backward_propagation(X, Y, parameters, cache):
+    m = X.shape[0]
+    gradients = {}
+    dZ = cache[f'A{len(parameters) // 2}'] - Y
+    for i in range(len(parameters) // 2, 0, -1):
+        gradients[f'dW{i}'] = (1 / m) * np.dot(cache[f'A{i-1}'].T, dZ)
+        gradients[f'db{i}'] = (1 / m) * np.sum(dZ, axis=0, keepdims=True)
+        if i > 1:
+            dA = np.dot(dZ, parameters[f'W{i}'].T)
+            dZ = dA * (cache[f'Z{i-1}'] > 0)
+    return gradients
+```
+
+
+```python
+##################################
+# Defining the Cross-entropy loss
+##################################
+def compute_cost(Y, Y_hat):
+    m = Y.shape[0]
+    logprobs = -np.log(Y_hat[range(m), np.argmax(Y, axis=1)])
+    return np.sum(logprobs) / m
+```
+
+
+```python
+##################################
+# Updating model parameters
+# with no regularization
+##################################
+def update_parameters_no_reg(parameters, gradients, learning_rate):
+    for i in range(1, len(parameters) // 2 + 1):
+        parameters[f'W{i}'] -= learning_rate * gradients[f'dW{i}']
+        parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
+    return parameters
+```
+
+
+```python
+##################################
+# Implementing neural network model training
+# using no regularization
+##################################
+
+##################################
+# Initializing training parameters
+##################################
+np.random.seed(88888)
+parameters = initialize_parameters(input_size, hidden_sizes, output_size)
+
+##################################
+# Creating lists to store cost and accuracy for plotting
+##################################
+costs = []
+accuracies = []
+
+##################################
+# Creating lists to store weights for plotting
+##################################
+weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
+
+##################################
+# Training a neural network model
+# using no regularization
+##################################
+for i in range(iterations):
+    # Implementing forward propagation
+    cache = forward_propagation(matrix_x_values, parameters)
+    Y_hat = cache[f'A{len(parameters) // 2}']
+    
+    # Computing cost and accuracy
+    cost = compute_cost(y_values, Y_hat)
+    accuracy = np.mean(np.argmax(y_values, axis=1) == np.argmax(Y_hat, axis=1))
+    
+    # Implementing backward propagation
+    gradients = backward_propagation(matrix_x_values, y_values, parameters, cache)
+    
+    # Updating model parameter values
+    parameters = update_parameters_no_reg(parameters, gradients, learning_rate)
+    
+    # Recording model weight values
+    for j in range(1, len(hidden_sizes) + 2):
+        weight_history[f'W{j}'].append(parameters[f'W{j}'].copy())
+    
+    # Recording cost and accuracy values
+    costs.append(cost)
+    accuracies.append(accuracy)
+    
+    # Printing cost and accuracy every 100 iterations
+    if i % 100 == 0:
+        print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
+
+```
+
+    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.6147654003943768, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.5849890742037946, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.5730376060537729, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.5680074825468361, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.5658158801975834, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.5648377437853757, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.5643939216770197, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.5641902551849223, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.5640960709646553, Accuracy = 0.7484662576687117
+    
+
+
+```python
+##################################
+# Plotting cost and accuracy profiles
+##################################
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(range(iterations), costs)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.title('Cost vs Iterations')
+
+plt.subplot(1, 2, 2)
+plt.plot(range(iterations), accuracies)
+plt.xlabel('Iterations')
+plt.ylabel('Accuracy')
+plt.title('Accuracy vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_180_0.png)
+    
+
+
+
+```python
+##################################
+# Plotting model weight profiles
+##################################
+num_layers = len(hidden_sizes) + 1
+plt.figure(figsize=(15, 10))
+for i in range(1, num_layers + 1):
+    plt.subplot(2, num_layers // 2, i)
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.xlabel('Iterations')
+    plt.ylabel('Average Absolute Weight')
+    plt.title(f'Layer {i} Weights vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_181_0.png)
+    
+
+
 ### 1.6.3 L1 Regularization <a class="anchor" id="1.6.3"></a>
 
 [Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
@@ -5529,6 +5766,142 @@ y_values = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
 [Regularization Algorithms](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of neural network classification, are techniques used to prevent overfitting and improve the generalization performance of the model by imposing constraints on its parameters during training. These constraints are typically applied to the weights of the neural network and are aimed at reducing model complexity, controlling the magnitude of the weights, and promoting simpler and more generalizable solutions. Regularization approaches work by adding penalty terms to the loss function during training. These penalty terms penalize large weights or complex models, encouraging the optimization process to prioritize simpler solutions that generalize well to unseen data. By doing so, regularization helps prevent the neural network from fitting noise or irrelevant patterns present in the training data and encourages it to learn more robust and meaningful representations.
 
 [L1 Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) adds a penalty term to the loss function proportional to the absolute values of the weights. It encourages sparsity in the weight matrix, effectively performing feature selection by driving some weights to exactly zero. This makes the process robust to irrelevant features by reducing their impact on the model. Despite these advantages, L1 regularization has drawbacks as a method including less stable solutions (the optimization problem with L1 regularization can have multiple solutions, leading to instability in the learned weights) and being not differentiable (the absolute value function used in L1 regularization is not differentiable at zero, which can complicate optimization).
+
+
+
+```python
+##################################
+# Updating model parameters
+# with L1 regularization
+##################################
+def update_parameters_l1(parameters, gradients, learning_rate, lambd):
+    for i in range(1, len(parameters) // 2 + 1):
+        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * np.sign(parameters[f'W{i}']))
+        parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
+    return parameters
+```
+
+
+```python
+##################################
+# Implementing neural network model training
+# using L1 regularization
+##################################
+
+##################################
+# Initializing training parameters
+##################################
+np.random.seed(88888)
+parameters = initialize_parameters(input_size, hidden_sizes, output_size)
+
+##################################
+# Initializing regularization parameters
+##################################
+lambd = 0.10
+
+##################################
+# Creating lists to store cost and accuracy for plotting
+##################################
+costs = []
+accuracies = []
+
+##################################
+# Creating lists to store weights for plotting
+##################################
+weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
+
+##################################
+# Training a neural network model
+# using no regularization
+##################################
+for i in range(iterations):
+    # Implementing forward propagation
+    cache = forward_propagation(matrix_x_values, parameters)
+    Y_hat = cache[f'A{len(parameters) // 2}']
+    
+    # Computing cost and accuracy
+    cost = compute_cost(y_values, Y_hat)
+    accuracy = np.mean(np.argmax(y_values, axis=1) == np.argmax(Y_hat, axis=1))
+    
+    # Implementing backward propagation
+    gradients = backward_propagation(matrix_x_values, y_values, parameters, cache)
+    
+    # Updating model parameter values
+    parameters = update_parameters_l1(parameters, gradients, learning_rate, lambd)
+    
+    # Recording model weight values
+    for j in range(1, len(hidden_sizes) + 2):
+        weight_history[f'W{j}'].append(parameters[f'W{j}'].copy())
+    
+    # Recording cost and accuracy values
+    costs.append(cost)
+    accuracies.append(accuracy)
+    
+    # Printing cost and accuracy every 100 iterations
+    if i % 100 == 0:
+        print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
+```
+
+    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.6147665934215493, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.5849901108813963, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.5730383193435081, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.5680079307308525, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.5658161478239907, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.5648378983024844, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.5643940087994682, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.5641903035139325, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.5640960975306429, Accuracy = 0.7484662576687117
+    
+
+
+```python
+##################################
+# Plotting cost and accuracy profiles
+##################################
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(range(iterations), costs)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.title('Cost vs Iterations')
+
+plt.subplot(1, 2, 2)
+plt.plot(range(iterations), accuracies)
+plt.xlabel('Iterations')
+plt.ylabel('Accuracy')
+plt.title('Accuracy vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_185_0.png)
+    
+
+
+
+```python
+##################################
+# Plotting model weight profiles
+##################################
+num_layers = len(hidden_sizes) + 1
+plt.figure(figsize=(15, 10))
+for i in range(1, num_layers + 1):
+    plt.subplot(2, num_layers // 2, i)
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.xlabel('Iterations')
+    plt.ylabel('Average Absolute Weight')
+    plt.title(f'Layer {i} Weights vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_186_0.png)
+    
 
 
 ### 1.6.4 L2 Regularization <a class="anchor" id="1.6.4"></a>
@@ -5540,13 +5913,284 @@ y_values = np.where(cancer_rate_premodelling['CANRAT'] == 'High', 1, 0)
 [L2 Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) adds a penalty term to the loss function proportional to the square of the weights. It discourages large weights and pushes them towards smaller values. The process provides stable solutions as L2 regularization leads to a convex optimization problem, ensuring a unique and stable solution. Additionally, the method has a smoothing effect by encourages small weights, which can prevent overfitting and lead to smoother decision boundaries. L2 regularization however does not perform feature selection by not forcing any weights to become exactly zero, so it may not eliminate irrelevant features. As a method, it also may not effectively handle highly correlated features well since L2 regularization treats all features equally.
 
 
-### 1.6.5 ElasticNet Regularization <a class="anchor" id="1.6.5"></a>
+
+```python
+##################################
+# Updating model parameters
+# with L2 regularization
+##################################
+def update_parameters_l2(parameters, gradients, learning_rate, lambd):
+    for i in range(1, len(parameters) // 2 + 1):
+        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}']**2)
+        parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
+    return parameters
+```
+
+
+```python
+##################################
+# Implementing neural network model training
+# using L2 regularization
+##################################
+
+##################################
+# Initializing training parameters
+##################################
+np.random.seed(88888)
+parameters = initialize_parameters(input_size, hidden_sizes, output_size)
+
+##################################
+# Initializing regularization parameters
+##################################
+lambd = 0.10
+
+##################################
+# Creating lists to store cost and accuracy for plotting
+##################################
+costs = []
+accuracies = []
+
+##################################
+# Creating lists to store weights for plotting
+##################################
+weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
+
+##################################
+# Training a neural network model
+# using no regularization
+##################################
+for i in range(iterations):
+    # Implementing forward propagation
+    cache = forward_propagation(matrix_x_values, parameters)
+    Y_hat = cache[f'A{len(parameters) // 2}']
+    
+    # Computing cost and accuracy
+    cost = compute_cost(y_values, Y_hat)
+    accuracy = np.mean(np.argmax(y_values, axis=1) == np.argmax(Y_hat, axis=1))
+    
+    # Implementing backward propagation
+    gradients = backward_propagation(matrix_x_values, y_values, parameters, cache)
+    
+    # Updating model parameter values
+    parameters = update_parameters_l2(parameters, gradients, learning_rate, lambd)
+    
+    # Recording model weight values
+    for j in range(1, len(hidden_sizes) + 2):
+        weight_history[f'W{j}'].append(parameters[f'W{j}'].copy())
+    
+    # Recording cost and accuracy values
+    costs.append(cost)
+    accuracies.append(accuracy)
+    
+    # Printing cost and accuracy every 100 iterations
+    if i % 100 == 0:
+        print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
+```
+
+    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.6147653982394352, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.5849890702759111, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.573037601809294, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.5680074787965406, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.5658158772150285, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.5648377415579665, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.564393920079815, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.5641902540697863, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.5640960701999824, Accuracy = 0.7484662576687117
+    
+
+
+```python
+##################################
+# Plotting cost and accuracy profiles
+##################################
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(range(iterations), costs)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.title('Cost vs Iterations')
+
+plt.subplot(1, 2, 2)
+plt.plot(range(iterations), accuracies)
+plt.xlabel('Iterations')
+plt.ylabel('Accuracy')
+plt.title('Accuracy vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_190_0.png)
+    
+
+
+
+```python
+##################################
+# Plotting model weight profiles
+##################################
+num_layers = len(hidden_sizes) + 1
+plt.figure(figsize=(15, 10))
+for i in range(1, num_layers + 1):
+    plt.subplot(2, num_layers // 2, i)
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.xlabel('Iterations')
+    plt.ylabel('Average Absolute Weight')
+    plt.title(f'Layer {i} Weights vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_191_0.png)
+    
+
+
+### 1.6.5 ElasticNet Regularization <a class="anchor" id="1.6.4"></a>
 
 [Backpropagation](https://link.springer.com/book/10.1007/978-0-387-84858-7) and [Weight Update](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of an artificial neural network, involve the process of iteratively adjusting the weights of the connections between neurons in the network to minimize the difference between the predicted and the actual target responses. Input data is fed into the neural network, and it propagates through the network layer by layer, starting from the input layer, through hidden layers, and ending at the output layer. At each neuron, the weighted sum of inputs is calculated, followed by the application of an activation function to produce the neuron's output. Once the forward pass is complete, the network's output is compared to the actual target output. The difference between the predicted output and the actual output is quantified using a loss function, which measures the discrepancy between the predicted and actual values. Common loss functions for classification tasks include cross-entropy loss. During the backward pass, the error is propagated backward through the network to compute the gradients of the loss function with respect to each weight in the network. This is achieved using the chain rule of calculus, which allows the error to be decomposed and distributed backward through the network. The gradients quantify how much a change in each weight would affect the overall error of the network. Once the gradients are computed, the weights are updated in the opposite direction of the gradient to minimize the error. This update is typically performed using an optimization algorithm such as gradient descent, which adjusts the weights in proportion to their gradients and a learning rate hyperparameter. The learning rate determines the size of the step taken in the direction opposite to the gradient. These steps are repeated for multiple iterations (epochs) over the training data. As the training progresses, the weights are adjusted iteratively to minimize the error, leading to a neural network model that accurately classifies input data.
 
 [Regularization Algorithms](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of neural network classification, are techniques used to prevent overfitting and improve the generalization performance of the model by imposing constraints on its parameters during training. These constraints are typically applied to the weights of the neural network and are aimed at reducing model complexity, controlling the magnitude of the weights, and promoting simpler and more generalizable solutions. Regularization approaches work by adding penalty terms to the loss function during training. These penalty terms penalize large weights or complex models, encouraging the optimization process to prioritize simpler solutions that generalize well to unseen data. By doing so, regularization helps prevent the neural network from fitting noise or irrelevant patterns present in the training data and encourages it to learn more robust and meaningful representations.
 
 [ElasticNet Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) combines L1 and L2 regularization by adding both penalty terms to the loss function. It addresses the limitations of L1 and L2 regularization by providing a compromise between feature selection and weight shrinkage. ElasticNet regularization combines the advantages of both L1 and L2 methods by providing a more flexible regularization approach. It can handle highly correlated features better than L1 regularization alone. Some disadvantages include the presence of more hyperparameters (ElasticNet regularization introduces an additional hyperparameter to control the balance between L1 and L2 penalties, which needs to be tuned) and computational complexity (training with ElasticNet regularization can be computationally more expensive compared to L1 or L2 regularization alone).
+
+
+```python
+##################################
+# Updating model parameters
+# with ElasticNet regularization
+##################################
+def update_parameters_elastic(parameters, gradients, learning_rate, lambd):
+    for i in range(1, len(parameters) // 2 + 1):
+        parameters[f'W{i}'] -= learning_rate * (gradients[f'dW{i}'] + lambd * parameters[f'W{i}']**2 + lambd * np.sign(parameters[f'W{i}']))
+        parameters[f'b{i}'] -= learning_rate * gradients[f'db{i}']
+    return parameters
+```
+
+
+```python
+##################################
+# Implementing neural network model training
+# with ElasticNet regularization
+##################################
+
+##################################
+# Initializing training parameters
+##################################
+np.random.seed(88888)
+parameters = initialize_parameters(input_size, hidden_sizes, output_size)
+
+##################################
+# Initializing regularization parameters
+##################################
+lambd = 0.10
+
+##################################
+# Creating lists to store cost and accuracy for plotting
+##################################
+costs = []
+accuracies = []
+
+##################################
+# Creating lists to store weights for plotting
+##################################
+weight_history = {f'W{i}': [] for i in range(1, len(hidden_sizes) + 2)}
+
+##################################
+# Training a neural network model
+# using no regularization
+##################################
+for i in range(iterations):
+    # Implementing forward propagation
+    cache = forward_propagation(matrix_x_values, parameters)
+    Y_hat = cache[f'A{len(parameters) // 2}']
+    
+    # Computing cost and accuracy
+    cost = compute_cost(y_values, Y_hat)
+    accuracy = np.mean(np.argmax(y_values, axis=1) == np.argmax(Y_hat, axis=1))
+    
+    # Implementing backward propagation
+    gradients = backward_propagation(matrix_x_values, y_values, parameters, cache)
+    
+    # Updating model parameter values
+    parameters = update_parameters_elastic(parameters, gradients, learning_rate, lambd)
+    
+    # Recording model weight values
+    for j in range(1, len(hidden_sizes) + 2):
+        weight_history[f'W{j}'].append(parameters[f'W{j}'].copy())
+    
+    # Recording cost and accuracy values
+    costs.append(cost)
+    accuracies.append(accuracy)
+    
+    # Printing cost and accuracy every 100 iterations
+    if i % 100 == 0:
+        print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
+```
+
+    Iteration 0: Cost = 0.6931471832391259, Accuracy = 0.2822085889570552
+    Iteration 100: Cost = 0.6147665934269161, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.5849901108886193, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.5730383193497689, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.5680079307356958, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.5658161478275668, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.5648378983050625, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.5643940088013006, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.564190303515223, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.564096097531546, Accuracy = 0.7484662576687117
+    
+
+
+```python
+##################################
+# Plotting cost and accuracy profiles
+##################################
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(range(iterations), costs)
+plt.xlabel('Iterations')
+plt.ylabel('Cost')
+plt.title('Cost vs Iterations')
+
+plt.subplot(1, 2, 2)
+plt.plot(range(iterations), accuracies)
+plt.xlabel('Iterations')
+plt.ylabel('Accuracy')
+plt.title('Accuracy vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_195_0.png)
+    
+
+
+
+```python
+##################################
+# Plotting model weight profiles
+##################################
+num_layers = len(hidden_sizes) + 1
+plt.figure(figsize=(15, 10))
+for i in range(1, num_layers + 1):
+    plt.subplot(2, num_layers // 2, i)
+    plt.plot(range(iterations), [np.mean(np.abs(weights)) for weights in weight_history[f'W{i}']])
+    plt.xlabel('Iterations')
+    plt.ylabel('Average Absolute Weight')
+    plt.title(f'Layer {i} Weights vs Iterations')
+
+plt.show()
+```
+
+
+    
+![png](output_196_0.png)
+    
 
 
 ## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
