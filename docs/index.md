@@ -5768,7 +5768,7 @@ plt.plot(range(iterations), accuracies)
 plt.ylim([0,1])
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('No Regularization: Classification Accuracy by Iteration')
+plt.title('No Regularization: Classification by Iteration')
 
 plt.show()
 ```
@@ -5794,7 +5794,7 @@ for i in range(1, num_layers + 1):
     plt.ylim([-1,5])
     plt.legend(loc="upper right")
     plt.xlabel('Iterations')
-    plt.ylabel('Average Absolute Weight')
+    plt.ylabel('Absolute Weight')
     plt.title(f'No Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
@@ -6049,7 +6049,7 @@ plt.plot(range(iterations), accuracies)
 plt.ylim([0,1])
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('L1 Regularization: Classification Accuracy by Iteration')
+plt.title('L1 Regularization: Classification by Iteration')
 
 plt.show()
 ```
@@ -6075,7 +6075,7 @@ for i in range(1, num_layers + 1):
     plt.ylim([-1,5])
     plt.legend(loc="upper right")
     plt.xlabel('Iterations')
-    plt.ylabel('Average Absolute Weight')
+    plt.ylabel('Absolute Weight')
     plt.title(f'L1 Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
@@ -6330,7 +6330,7 @@ plt.plot(range(iterations), accuracies)
 plt.ylim([0,1])
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('L2 Regularization: Classification Accuracy by Iteration')
+plt.title('L2 Regularization: Classification by Iteration')
 
 plt.show()
 ```
@@ -6356,7 +6356,7 @@ for i in range(1, num_layers + 1):
     plt.ylim([-1,5])
     plt.legend(loc="upper right")
     plt.xlabel('Iterations')
-    plt.ylabel('Average Absolute Weight')
+    plt.ylabel('Absolute Weight')
     plt.title(f'L2 Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
@@ -6382,7 +6382,7 @@ L2R_values = pd.DataFrame([accuracies[-1],
                           [np.mean(np.abs(weights)) for weights in weight_history['W2']][-1],
                           [np.mean(np.abs(weights)) for weights in weight_history['W3']][-1],
                           [np.mean(np.abs(weights)) for weights in weight_history['W4']][-1]])
-L2R_method = pd.DataFrame(["L1 Regularization"]*6)
+L2R_method = pd.DataFrame(["L2 Regularization"]*6)
 L2R_summary = pd.concat([L2R_metrics, 
                          L2R_values,
                          L2R_method], axis=1)
@@ -6420,37 +6420,37 @@ display(L2R_summary)
       <th>0</th>
       <td>ACCURACY</td>
       <td>0.944785</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LOSS</td>
       <td>0.175098</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
     <tr>
       <th>2</th>
       <td>LAYER 1 MEAN WEIGHT</td>
       <td>0.537587</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
     <tr>
       <th>3</th>
       <td>LAYER 2 MEAN WEIGHT</td>
       <td>0.503285</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
     <tr>
       <th>4</th>
       <td>LAYER 3 MEAN WEIGHT</td>
       <td>0.487109</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
     <tr>
       <th>5</th>
       <td>LAYER 4 MEAN WEIGHT</td>
       <td>0.749369</td>
-      <td>L1 Regularization</td>
+      <td>L2 Regularization</td>
     </tr>
   </tbody>
 </table>
@@ -6610,7 +6610,7 @@ plt.plot(range(iterations), accuracies)
 plt.ylim([0,1])
 plt.xlabel('Iterations')
 plt.ylabel('Accuracy')
-plt.title('ElasticNet Regularization: Classification Accuracy by Iteration')
+plt.title('ElasticNet Regularization: Classification by Iteration')
 
 plt.show()
 ```
@@ -6636,7 +6636,7 @@ for i in range(1, num_layers + 1):
     plt.ylim([-1,5])
     plt.legend(loc="upper right")
     plt.xlabel('Iterations')
-    plt.ylabel('Average Absolute Weight')
+    plt.ylabel('Absolute Weight')
     plt.title(f'ElasticNet Regularization: Layer {i} Weights by Iteration')
 
 plt.show()
@@ -6739,6 +6739,512 @@ display(ENR_summary)
 
 ## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
 
+
+
+
+```python
+##################################
+# Consolidating all the
+# model performance metrics
+##################################
+model_performance_comparison = pd.concat([NR_summary, 
+                                          L1R_summary,
+                                          L2R_summary, 
+                                          ENR_summary], 
+                                         ignore_index=True)
+print('Neural Network Model Comparison: ')
+display(model_performance_comparison)
+```
+
+    Neural Network Model Comparison: 
+    
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.920245</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOSS</td>
+      <td>0.205037</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LAYER 1 MEAN WEIGHT</td>
+      <td>0.878401</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LAYER 2 MEAN WEIGHT</td>
+      <td>0.663882</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LAYER 3 MEAN WEIGHT</td>
+      <td>0.662323</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LAYER 4 MEAN WEIGHT</td>
+      <td>1.042851</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>ACCURACY</td>
+      <td>0.944785</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LOSS</td>
+      <td>0.179956</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LAYER 1 MEAN WEIGHT</td>
+      <td>0.493354</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>LAYER 2 MEAN WEIGHT</td>
+      <td>0.413750</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>LAYER 3 MEAN WEIGHT</td>
+      <td>0.390737</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LAYER 4 MEAN WEIGHT</td>
+      <td>0.715698</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ACCURACY</td>
+      <td>0.944785</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LOSS</td>
+      <td>0.175098</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LAYER 1 MEAN WEIGHT</td>
+      <td>0.537587</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>LAYER 2 MEAN WEIGHT</td>
+      <td>0.503285</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>LAYER 3 MEAN WEIGHT</td>
+      <td>0.487109</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>LAYER 4 MEAN WEIGHT</td>
+      <td>0.749369</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ACCURACY</td>
+      <td>0.969325</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LOSS</td>
+      <td>0.109622</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LAYER 1 MEAN WEIGHT</td>
+      <td>0.275963</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>LAYER 2 MEAN WEIGHT</td>
+      <td>0.374856</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>LAYER 3 MEAN WEIGHT</td>
+      <td>0.371444</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>LAYER 4 MEAN WEIGHT</td>
+      <td>0.596937</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Consolidating the values for the
+# accuracy metrics
+# for all models
+##################################
+model_performance_comparison_accuracy = model_performance_comparison[model_performance_comparison['Metric']=='ACCURACY']
+model_performance_comparison_accuracy.reset_index(inplace=True, drop=True)
+model_performance_comparison_accuracy
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ACCURACY</td>
+      <td>0.920245</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ACCURACY</td>
+      <td>0.944785</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ACCURACY</td>
+      <td>0.944785</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ACCURACY</td>
+      <td>0.969325</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Plotting the values for the
+# accuracy metrics
+# for all models
+##################################
+fig, ax = plt.subplots(figsize=(7, 7))
+accuracy_hbar = ax.barh(model_performance_comparison_accuracy['Method'], model_performance_comparison_accuracy['Value'])
+ax.set_xlabel("Accuracy")
+ax.set_ylabel("Neural Network Classification Models")
+ax.bar_label(accuracy_hbar, fmt='%.5f', padding=-50, color='white', fontweight='bold')
+ax.set_xlim(0,1)
+plt.show()
+```
+
+
+    
+![png](output_204_0.png)
+    
+
+
+
+```python
+##################################
+# Consolidating the values for the
+# logarithmic loss error metrics
+# for all models
+##################################
+model_performance_comparison_loss = model_performance_comparison[model_performance_comparison['Metric']=='LOSS']
+model_performance_comparison_loss.reset_index(inplace=True, drop=True)
+model_performance_comparison_loss
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Metric</th>
+      <th>Value</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LOSS</td>
+      <td>0.205037</td>
+      <td>No Regularization</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LOSS</td>
+      <td>0.179956</td>
+      <td>L1 Regularization</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LOSS</td>
+      <td>0.175098</td>
+      <td>L2 Regularization</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LOSS</td>
+      <td>0.109622</td>
+      <td>ElasticNet Regularization</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Plotting the values for the
+# loss error
+# for all models
+##################################
+fig, ax = plt.subplots(figsize=(7, 7))
+loss_hbar = ax.barh(model_performance_comparison_loss['Method'], model_performance_comparison_loss['Value'])
+ax.set_xlabel("Loss Error")
+ax.set_ylabel("Neural Network Classification Models")
+ax.bar_label(loss_hbar, fmt='%.5f', padding=-50, color='white', fontweight='bold')
+ax.set_xlim(0,0.25)
+plt.show()
+```
+
+
+    
+![png](output_206_0.png)
+    
+
+
+
+```python
+##################################
+# Consolidating the mean weights
+# for all models
+##################################
+weight_labels = ['LAYER 1 MEAN WEIGHT','LAYER 2 MEAN WEIGHT','LAYER 3 MEAN WEIGHT','LAYER 4 MEAN WEIGHT']
+NR_weights = model_performance_comparison[((model_performance_comparison['Metric'] == 'LAYER 1 MEAN WEIGHT') |
+                                           (model_performance_comparison['Metric'] == 'LAYER 2 MEAN WEIGHT') |
+                                           (model_performance_comparison['Metric'] == 'LAYER 3 MEAN WEIGHT') |
+                                           (model_performance_comparison['Metric'] == 'LAYER 4 MEAN WEIGHT')) & 
+                                           (model_performance_comparison['Method']=='No Regularization')]['Value'].values
+
+L1R_weights = model_performance_comparison[((model_performance_comparison['Metric'] == 'LAYER 1 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 2 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 3 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 4 MEAN WEIGHT')) & 
+                                            (model_performance_comparison['Method']=='L1 Regularization')]['Value'].values
+
+L2R_weights = model_performance_comparison[((model_performance_comparison['Metric'] == 'LAYER 1 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 2 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 3 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 4 MEAN WEIGHT')) & 
+                                            (model_performance_comparison['Method']=='L2 Regularization')]['Value'].values
+
+ENR_weights = model_performance_comparison[((model_performance_comparison['Metric'] == 'LAYER 1 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 2 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 3 MEAN WEIGHT') |
+                                            (model_performance_comparison['Metric'] == 'LAYER 4 MEAN WEIGHT')) & 
+                                            (model_performance_comparison['Method']=='ElasticNet Regularization')]['Value'].values
+```
+
+
+```python
+##################################
+# Plotting the values for the
+# mean weights
+# for all models
+##################################
+NN_layer_mean_weight_plot = pd.DataFrame({'No Regularization': list(NR_weights),
+                                          'L1 Regularization': list(L1R_weights),
+                                          'L2 Regularization': list(L2R_weights),
+                                          'ElasticNet Regularization': list(ENR_weights)},
+                                         index=['LAYER 1 MEAN WEIGHT','LAYER 2 MEAN WEIGHT','LAYER 3 MEAN WEIGHT','LAYER 4 MEAN WEIGHT'])
+NN_layer_mean_weight_plot
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>No Regularization</th>
+      <th>L1 Regularization</th>
+      <th>L2 Regularization</th>
+      <th>ElasticNet Regularization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>LAYER 1 MEAN WEIGHT</th>
+      <td>0.878401</td>
+      <td>0.493354</td>
+      <td>0.537587</td>
+      <td>0.275963</td>
+    </tr>
+    <tr>
+      <th>LAYER 2 MEAN WEIGHT</th>
+      <td>0.663882</td>
+      <td>0.413750</td>
+      <td>0.503285</td>
+      <td>0.374856</td>
+    </tr>
+    <tr>
+      <th>LAYER 3 MEAN WEIGHT</th>
+      <td>0.662323</td>
+      <td>0.390737</td>
+      <td>0.487109</td>
+      <td>0.371444</td>
+    </tr>
+    <tr>
+      <th>LAYER 4 MEAN WEIGHT</th>
+      <td>1.042851</td>
+      <td>0.715698</td>
+      <td>0.749369</td>
+      <td>0.596937</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Plotting all the mean weights
+# for all models
+##################################
+NN_layer_mean_weight_plot = NN_layer_mean_weight_plot.plot.barh(figsize=(10, 6), width=0.90)
+NN_layer_mean_weight_plot.set_xlim(0.00,1.25)
+NN_layer_mean_weight_plot.set_title("Model Comparison by Neural Network Layer Mean Weights")
+NN_layer_mean_weight_plot.set_xlabel("Absolute Weight")
+NN_layer_mean_weight_plot.set_ylabel("Regularization Conditions")
+NN_layer_mean_weight_plot.grid(False)
+NN_layer_mean_weight_plot.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+for container in NN_layer_mean_weight_plot.containers:
+    NN_layer_mean_weight_plot.bar_label(container, fmt='%.5f', padding=-50, color='white', fontweight='bold')
+```
+
+
+    
+![png](output_209_0.png)
+    
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
