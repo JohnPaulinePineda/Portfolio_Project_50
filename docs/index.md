@@ -5523,6 +5523,15 @@ y_values = y_values.to_numpy()
 
 [No Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) provides no additional constraints or penalties imposed on the model's parameters (weights and biases) during training. The model is free to learn complex patterns in the training data without any restrictions. Without regularization, the neural network may have a tendency to memorize noise or irrelevant patterns present in the training data. This can result in a highly complex model with large weights and intricate decision boundaries. Due to the lack of constraints on model complexity, there is a higher risk of overfitting when the model captures noise or idiosyncrasies in the training set rather than learning the underlying patterns of the data. In effect, the model may perform well on the training data but poorly on new, unseen data. 
 
+1. Neural network learning with no regularization was implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.01
+    * <span style="color: #FF0000">Iteration</span> = 5000
+2. The mean absolute weights learned at each layer were relatively flat and consistent across the entire iteration.
+3. The final cost estimate determined as 0.20503 at the 5000th epoch was not optimally low as compared to those obtained with regularization applied.
+4. Applying parameter updates with no regularization, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 92.02453
+5. The estimated classification accuracy was not optimal as compared to those obtained with regularization methods applied. 
+
 
 
 ```python
@@ -5564,15 +5573,6 @@ def initialize_parameters(input_size, hidden_sizes, output_size):
 ##################################
 def relu(x):
     return np.maximum(0, x)
-```
-
-
-```python
-##################################
-# Defining the activation function (Sigmoid)
-##################################
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
 ```
 
 
@@ -5775,7 +5775,7 @@ plt.show()
 
 
     
-![png](output_180_0.png)
+![png](output_179_0.png)
     
 
 
@@ -5802,7 +5802,7 @@ plt.show()
 
 
     
-![png](output_181_0.png)
+![png](output_180_0.png)
     
 
 
@@ -5902,6 +5902,16 @@ display(NR_summary)
 [Regularization Algorithms](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of neural network classification, are techniques used to prevent overfitting and improve the generalization performance of the model by imposing constraints on its parameters during training. These constraints are typically applied to the weights of the neural network and are aimed at reducing model complexity, controlling the magnitude of the weights, and promoting simpler and more generalizable solutions. Regularization approaches work by adding penalty terms to the loss function during training. These penalty terms penalize large weights or complex models, encouraging the optimization process to prioritize simpler solutions that generalize well to unseen data. By doing so, regularization helps prevent the neural network from fitting noise or irrelevant patterns present in the training data and encourages it to learn more robust and meaningful representations.
 
 [L1 Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) adds a penalty term to the loss function proportional to the absolute values of the weights. It encourages sparsity in the weight matrix, effectively performing feature selection by driving some weights to exactly zero. This makes the process robust to irrelevant features by reducing their impact on the model. Despite these advantages, L1 regularization has drawbacks as a method including less stable solutions (the optimization problem with L1 regularization can have multiple solutions, leading to instability in the learned weights) and being not differentiable (the absolute value function used in L1 regularization is not differentiable at zero, which can complicate optimization). In the context of neural network classification, an alternate formulation involves implementing L1 regularization by applying a sign instead of an absolute function directly to the weights. By using the sign function, L1 regularization encourages weights to become exactly zero more readily than the traditional L1 regularization with the absolute function. This leads to sparser weight matrices, where many weights are effectively pruned, resulting in simpler and potentially more interpretable models. Computing the gradient of the absolute value function in traditional L1 regularization involves dealing with piecewise gradients, which can be computationally expensive, especially in deep neural networks with many weights. In contrast, using the sign function simplifies the gradient calculation, leading to potentially faster training and convergence.
+
+1. Neural network learning with L1 regularization was implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.01
+    * <span style="color: #FF0000">Iteration</span> = 5000
+    * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
+2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+3. The final cost estimate determined as 0.17995 at the 5000th epoch was not optimally low as compared to those obtained from other regularization methods.
+4. Applying parameter updates with L1 regularization, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 94.47852
+5. The estimated classification accuracy was not optimal as compared to those obtained with other regularization methods. 
 
 
 
@@ -6056,7 +6066,7 @@ plt.show()
 
 
     
-![png](output_186_0.png)
+![png](output_185_0.png)
     
 
 
@@ -6083,7 +6093,7 @@ plt.show()
 
 
     
-![png](output_187_0.png)
+![png](output_186_0.png)
     
 
 
@@ -6183,6 +6193,16 @@ display(L1R_summary)
 [Regularization Algorithms](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of neural network classification, are techniques used to prevent overfitting and improve the generalization performance of the model by imposing constraints on its parameters during training. These constraints are typically applied to the weights of the neural network and are aimed at reducing model complexity, controlling the magnitude of the weights, and promoting simpler and more generalizable solutions. Regularization approaches work by adding penalty terms to the loss function during training. These penalty terms penalize large weights or complex models, encouraging the optimization process to prioritize simpler solutions that generalize well to unseen data. By doing so, regularization helps prevent the neural network from fitting noise or irrelevant patterns present in the training data and encourages it to learn more robust and meaningful representations.
 
 [L2 Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) typically adds a penalty term to the loss function proportional to the square of the weights. It discourages large weights and pushes them towards smaller values. The process provides stable solutions as L2 regularization leads to a convex optimization problem, ensuring a unique and stable solution. Additionally, the method has a smoothing effect by encourages small weights, which can prevent overfitting and lead to smoother decision boundaries. L2 regularization however does not perform feature selection by not forcing any weights to become exactly zero, so it may not eliminate irrelevant features. As a method, it also may not effectively handle highly correlated features well since L2 regularization treats all features equally. In the context of neural network classification, an alternate formulation involves implementing L2 regularization where the raw values of the weights are directly penalized without squaring them. This method provides a more balanced regularization effect across different weight magnitudes. Additionally, avoiding the squaring operation helps mitigate numerical instability issues particular for neural network model structures (such as exploding gradients), thereby improving the overall robustness of the training process.
+
+1. Neural network learning with L2 regularization was implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.01
+    * <span style="color: #FF0000">Iteration</span> = 5000
+    * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
+2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+3. The final cost estimate determined as 0.17509 at the 5000th epoch was not optimally low as compared to those obtained from other regularization methods.
+4. Applying parameter updates with L2 regularization, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 94.47852
+5. The estimated classification accuracy was not optimal as compared to those obtained with other regularization methods.
 
 
 
@@ -6337,7 +6357,7 @@ plt.show()
 
 
     
-![png](output_192_0.png)
+![png](output_191_0.png)
     
 
 
@@ -6364,7 +6384,7 @@ plt.show()
 
 
     
-![png](output_193_0.png)
+![png](output_192_0.png)
     
 
 
@@ -6464,6 +6484,16 @@ display(L2R_summary)
 [Regularization Algorithms](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of neural network classification, are techniques used to prevent overfitting and improve the generalization performance of the model by imposing constraints on its parameters during training. These constraints are typically applied to the weights of the neural network and are aimed at reducing model complexity, controlling the magnitude of the weights, and promoting simpler and more generalizable solutions. Regularization approaches work by adding penalty terms to the loss function during training. These penalty terms penalize large weights or complex models, encouraging the optimization process to prioritize simpler solutions that generalize well to unseen data. By doing so, regularization helps prevent the neural network from fitting noise or irrelevant patterns present in the training data and encourages it to learn more robust and meaningful representations.
 
 [ElasticNet Regularization](https://link.springer.com/book/10.1007/978-0-387-84858-7) combines L1 and L2 regularization by adding both penalty terms to the loss function. It addresses the limitations of L1 and L2 regularization by providing a compromise between feature selection and weight shrinkage. ElasticNet regularization combines the advantages of both L1 and L2 methods by providing a more flexible regularization approach. It can handle highly correlated features better than L1 regularization alone. Some disadvantages include the presence of more hyperparameters (ElasticNet regularization introduces an additional hyperparameter to control the balance between L1 and L2 penalties, which needs to be tuned) and computational complexity (training with ElasticNet regularization can be computationally more expensive compared to L1 or L2 regularization alone).
+
+1. Neural network learning with ElasticNet regularization was implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.01
+    * <span style="color: #FF0000">Iteration</span> = 5000
+    * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
+2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+3. The final cost estimate determined as 0.10962 at the 5000th epoch was the optimal value determined among all regularization methods.
+4. Applying parameter updates with ElasticNet regularization, the neural network model performance is estimated as follows:
+    * <span style="color: #FF0000">Accuracy</span> = 96.93251
+5. The estimated classification accuracy was the most optimal among all regularization methods.
 
 
 ```python
@@ -6617,7 +6647,7 @@ plt.show()
 
 
     
-![png](output_198_0.png)
+![png](output_197_0.png)
     
 
 
@@ -6644,7 +6674,7 @@ plt.show()
 
 
     
-![png](output_199_0.png)
+![png](output_198_0.png)
     
 
 
@@ -7020,7 +7050,7 @@ plt.show()
 
 
     
-![png](output_204_0.png)
+![png](output_203_0.png)
     
 
 
@@ -7111,7 +7141,7 @@ plt.show()
 
 
     
-![png](output_206_0.png)
+![png](output_205_0.png)
     
 
 
@@ -7243,7 +7273,7 @@ for container in NN_layer_mean_weight_plot.containers:
 
 
     
-![png](output_209_0.png)
+![png](output_208_0.png)
     
 
 
