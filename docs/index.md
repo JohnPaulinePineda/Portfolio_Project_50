@@ -5907,7 +5907,7 @@ display(NR_summary)
     * <span style="color: #FF0000">Learning Rate</span> = 0.01
     * <span style="color: #FF0000">Iteration</span> = 5000
     * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
-2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+2. The mean absolute weights learned at each layer showed a decreasing pattern with lower values after completing the iteration.
 3. The final cost estimate determined as 0.17995 at the 5000th epoch was not optimally low as compared to those obtained from other regularization methods.
 4. Applying parameter updates with L1 regularization, the neural network model performance is estimated as follows:
     * <span style="color: #FF0000">Accuracy</span> = 94.47852
@@ -6198,7 +6198,7 @@ display(L1R_summary)
     * <span style="color: #FF0000">Learning Rate</span> = 0.01
     * <span style="color: #FF0000">Iteration</span> = 5000
     * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
-2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+2. The mean absolute weights learned at each layer showed a decreasing pattern with lower values after completing the iteration.
 3. The final cost estimate determined as 0.17509 at the 5000th epoch was not optimally low as compared to those obtained from other regularization methods.
 4. Applying parameter updates with L2 regularization, the neural network model performance is estimated as follows:
     * <span style="color: #FF0000">Accuracy</span> = 94.47852
@@ -6489,7 +6489,7 @@ display(L2R_summary)
     * <span style="color: #FF0000">Learning Rate</span> = 0.01
     * <span style="color: #FF0000">Iteration</span> = 5000
     * <span style="color: #FF0000">Lambda Penalty</span> = 0.01
-2. The mean absolute weights learned at each layer showed a decreasing pattern toward the end of the iteration.
+2. The mean absolute weights learned at each layer showed a decreasing pattern with lower values after completing the iteration.
 3. The final cost estimate determined as 0.10962 at the 5000th epoch was the optimal value determined among all regularization methods.
 4. Applying parameter updates with ElasticNet regularization, the neural network model performance is estimated as follows:
     * <span style="color: #FF0000">Accuracy</span> = 96.93251
@@ -6769,6 +6769,15 @@ display(ENR_summary)
 
 ## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
 
+1. Neural network models which applied regularization generally learned lower weight values as compared to the reference model with no regularization. The magnitude of weights arranged from lowest to highest is given below:
+    * <span style="color: #FF0000">ElasticNet Regularization</span> = Combined L1 and L2 Penalization using Alternate Formulation
+    * <span style="color: #FF0000">L1 Regularization</span> = Alternate Formulation by Penalizing Signed Weights
+    * <span style="color: #FF0000">L2 Regularization</span> = Alternate Formulation by Penalizing Raw Weights
+2. Incidentally, neural network models which applied regularization demonstrated higher classification accuracy values than the reference model with no regularization. This might be counterintuitive considering that penalized models are expected to address overfitting and generalize better. However, since the models were not evaluated on an independent set, these findings may be inconclusive.
+3. The choice of **Regularization Algorithms** for penalizing the weights of a binary classification model using a neural network depends on various factors, including the characteristics of the dataset, the model architecture, and the specific goals of the task. 
+    * **L1 Regularization** encourages sparsity in the weight matrix, resulting in many weights being driven to zero. This can be beneficial when there are a large number of features, and it's desirable to identify and prioritize the most relevant ones for the classification task. 
+    * **L2 Regularization** is effective in preventing the weights from growing too large, which helps prevent overfitting and improves generalization performance. It is particularly useful when dealing with deep neural networks or models with a large number of parameters, where large weights can lead to overfitting.
+    * **ElasticNet Regularization** combines the benefits of both L1 and L2 regularization by simultaneously promoting sparsity and controlling weight magnitudes. It is particularly useful when dealing with datasets where a large number of features are present, and it's essential to perform feature selection while also controlling model complexity.
 
 
 
