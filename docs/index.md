@@ -2,7 +2,7 @@
 # Supervised Learning : Exploring Regularization Approaches for Controlling Model Complexity Through Weight Penalization for Neural Network Classification 
 
 ***
-### John Pauline Pineda <br> <br> *April 27, 2024*
+### John Pauline Pineda <br> <br> *April 25, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -35,7 +35,7 @@
 
 # 1. Table of Contents <a class="anchor" id="TOC"></a>
 
-This project manually implements the **L1 Regularization**, **L2 Regularization** and **Elasticnet Regularization** algorithms using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark> to penalize large weights, reduce model complexity and improve generalization with fixed values applied for the learning rate and iteration count parameters to optimally update the gradients and weights of an artificial neural network classification model. The cost function, classification accuracy and layer weight optimization profiles of the different regularization algorithms were compared. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
+This project manually implements the **L1 Regularization**, **L2 Regularization** and **ElasticNet Regularization** algorithms using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark> to penalize large weights, reduce model complexity and improve generalization with fixed values applied for the learning rate and iteration count parameters to optimally update the gradients and weights of an artificial neural network classification model. The cost function, classification accuracy and layer weight optimization profiles of the different regularization algorithms were compared. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
 
 [Artificial Neural Network](https://link.springer.com/book/10.1007/978-0-387-84858-7), in the context of categorical response prediction, consists of interconnected nodes called neurons organized in layers. The model architecture involves an input layer which receives the input data, with each neuron representing a feature or attribute of the data; hidden layers which perform computations on the input data through weighted connections between neurons and apply activation functions to produce outputs; and the output layer which produces the final predictions equal to the number of classes, each representing the probability of the input belonging to a particular class, based on the computations performed in the hidden layers. Neurons within adjacent layers are connected by weighted connections. Each connection has an associated weight that determines the strength of influence one neuron has on another. These weights are adjusted during the training process to enable the network to learn from the input data and make accurate predictions. Activation functions introduce non-linearities into the network, allowing it to learn complex relationships between inputs and outputs. The training process involves presenting input data along with corresponding target outputs to the network and adjusting the weights to minimize the difference between the predicted outputs and the actual targets which is typically performed through optimization algorithms such as gradient descent and backpropagation. The training process iteratively updates the weights until the model's predictions closely match the target outputs.
 
@@ -7289,7 +7289,7 @@ for container in NN_layer_mean_weight_plot.containers:
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-
+![Project50_Summary.png](attachment:b01c4dd4-25bb-45cf-ab4d-66573db9e5aa.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
