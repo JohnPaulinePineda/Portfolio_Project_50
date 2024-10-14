@@ -2,7 +2,7 @@
 # Supervised Learning : Exploring Regularization Approaches for Controlling Model Complexity Through Weight Penalization for Neural Network Classification 
 
 ***
-### John Pauline Pineda <br> <br> *April 25, 2024*
+### [**John Pauline Pineda**](https://github.com/JohnPaulinePineda) <br> <br> *April 25, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -131,6 +131,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import itertools
+import os
 %matplotlib inline
 
 from operator import add,mul,truediv
@@ -145,9 +146,18 @@ from scipy import stats
 
 ```python
 ##################################
-# Loading the dataset
+# Defining file paths
 ##################################
-cancer_rate = pd.read_csv('CategoricalCancerRates.csv')
+DATASETS_ORIGINAL_PATH = r"datasets\original"
+```
+
+
+```python
+##################################
+# Loading the dataset
+# from the DATASETS_ORIGINAL_PATH
+##################################
+cancer_rate = pd.read_csv(os.path.join("..", DATASETS_ORIGINAL_PATH, "CategoricalCancerRates.csv"))
 ```
 
 
@@ -819,7 +829,7 @@ cancer_rate.duplicated().sum()
 
 
 
-    0
+    np.int64(0)
 
 
 
@@ -1213,15 +1223,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.864407</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>GDPPER</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>165</td>
-      <td>12</td>
-      <td>0.932203</td>
-    </tr>
-    <tr>
       <th>21</th>
       <td>EPISCO</td>
       <td>float64</td>
@@ -1231,13 +1232,13 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.932203</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>HDICAT</td>
-      <td>category</td>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
       <td>177</td>
-      <td>167</td>
-      <td>10</td>
-      <td>0.943503</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
     </tr>
     <tr>
       <th>16</th>
@@ -1249,8 +1250,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.943503</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>DTHCMD</td>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>category</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1267,8 +1277,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>CO2EMI</td>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1285,15 +1304,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>GHGEMI</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>170</td>
-      <td>7</td>
-      <td>0.960452</td>
-    </tr>
-    <tr>
       <th>14</th>
       <td>FORARE</td>
       <td>float64</td>
@@ -1303,35 +1313,8 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.977401</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>TUBINC</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>AGRLND</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
       <th>6</th>
       <td>POPGRO</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>POPDEN</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1348,8 +1331,35 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.983051</td>
     </tr>
     <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
       <th>7</th>
       <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1661,13 +1671,6 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>132</th>
-      <td>Somalia</td>
-      <td>22</td>
-      <td>6</td>
-      <td>0.272727</td>
-    </tr>
-    <tr>
       <th>168</th>
       <td>South Sudan</td>
       <td>22</td>
@@ -1675,15 +1678,22 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>73</th>
-      <td>Venezuela</td>
+      <th>132</th>
+      <td>Somalia</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Libya</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Libya</td>
+      <th>73</th>
+      <td>Venezuela</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
@@ -1916,7 +1926,7 @@ display(numeric_column_quality_summary)
       <td>34024.900890</td>
       <td>2.346469e+05</td>
       <td>98380.636010</td>
-      <td>42154.178100</td>
+      <td>77541.764380</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -1934,7 +1944,7 @@ display(numeric_column_quality_summary)
       <td>61.701500</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>52.516000</td>
+      <td>86.699000</td>
       <td>2</td>
       <td>1</td>
       <td>2.000000</td>
@@ -1970,7 +1980,7 @@ display(numeric_column_quality_summary)
       <td>0.873660</td>
       <td>5.354510e+00</td>
       <td>1.232440</td>
-      <td>0.962180</td>
+      <td>3.422870</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -1988,7 +1998,7 @@ display(numeric_column_quality_summary)
       <td>1.179959</td>
       <td>3.727101e+00</td>
       <td>1.235701</td>
-      <td>1.483129</td>
+      <td>2.204789</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2006,7 +2016,7 @@ display(numeric_column_quality_summary)
       <td>72.464610</td>
       <td>8.456000e+01</td>
       <td>83.200000</td>
-      <td>68.687000</td>
+      <td>82.256098</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2024,7 +2034,7 @@ display(numeric_column_quality_summary)
       <td>44.500000</td>
       <td>5.920000e+02</td>
       <td>12.000000</td>
-      <td>7.200000</td>
+      <td>4.100000</td>
       <td>4</td>
       <td>3</td>
       <td>1.333333</td>
@@ -2042,7 +2052,7 @@ display(numeric_column_quality_summary)
       <td>12.456279</td>
       <td>6.520789e+01</td>
       <td>4.941054</td>
-      <td>42.079403</td>
+      <td>4.354730</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2060,7 +2070,7 @@ display(numeric_column_quality_summary)
       <td>40.386649</td>
       <td>8.084112e+01</td>
       <td>46.252480</td>
-      <td>72.006469</td>
+      <td>38.562911</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2078,7 +2088,7 @@ display(numeric_column_quality_summary)
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2096,7 +2106,7 @@ display(numeric_column_quality_summary)
       <td>32.381668</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>13.637841</td>
+      <td>80.081439</td>
       <td>3</td>
       <td>1</td>
       <td>3.000000</td>
@@ -2114,7 +2124,7 @@ display(numeric_column_quality_summary)
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2132,7 +2142,7 @@ display(numeric_column_quality_summary)
       <td>31.509048</td>
       <td>9.741212e+01</td>
       <td>17.421315</td>
-      <td>8.782159</td>
+      <td>37.570126</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2150,7 +2160,7 @@ display(numeric_column_quality_summary)
       <td>2.298368</td>
       <td>3.172684e+01</td>
       <td>14.772658</td>
-      <td>0.972088</td>
+      <td>6.160799</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2186,7 +2196,7 @@ display(numeric_column_quality_summary)
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2204,7 +2214,7 @@ display(numeric_column_quality_summary)
       <td>53.392460</td>
       <td>1.433107e+02</td>
       <td>110.139221</td>
-      <td>45.220661</td>
+      <td>75.734833</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2222,7 +2232,7 @@ display(numeric_column_quality_summary)
       <td>5348.192875</td>
       <td>1.173705e+05</td>
       <td>51722.069000</td>
-      <td>3961.726633</td>
+      <td>41760.594780</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2426,7 +2436,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2444,7 +2454,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2480,7 +2490,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2652,7 +2662,7 @@ display(object_column_quality_summary)
       <th>0</th>
       <td>COUNTRY</td>
       <td>Australia</td>
-      <td>Mauritius</td>
+      <td>New Zealand</td>
       <td>1</td>
       <td>1</td>
       <td>1.0</td>
@@ -3594,7 +3604,7 @@ cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='cat
 # for categorical columns with
 # the most frequent category
 ##################################
-cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0], inplace=True)
+cancer_rate_cleaned_categorical['HDICAT'] = cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0])
 cancer_rate_imputed_categorical = cancer_rate_cleaned_categorical.reset_index(drop=True)
 ```
 
@@ -4121,91 +4131,91 @@ for column in cancer_rate_imputed_numeric:
 
 
     
-![png](output_121_0.png)
+![png](output_122_0.png)
     
 
 
 
     
-![png](output_121_1.png)
+![png](output_122_1.png)
     
 
 
 
     
-![png](output_121_2.png)
+![png](output_122_2.png)
     
 
 
 
     
-![png](output_121_3.png)
+![png](output_122_3.png)
     
 
 
 
     
-![png](output_121_4.png)
+![png](output_122_4.png)
     
 
 
 
     
-![png](output_121_5.png)
+![png](output_122_5.png)
     
 
 
 
     
-![png](output_121_6.png)
+![png](output_122_6.png)
     
 
 
 
     
-![png](output_121_7.png)
+![png](output_122_7.png)
     
 
 
 
     
-![png](output_121_8.png)
+![png](output_122_8.png)
     
 
 
 
     
-![png](output_121_9.png)
+![png](output_122_9.png)
     
 
 
 
     
-![png](output_121_10.png)
+![png](output_122_10.png)
     
 
 
 
     
-![png](output_121_11.png)
+![png](output_122_11.png)
     
 
 
 
     
-![png](output_121_12.png)
+![png](output_122_12.png)
     
 
 
 
     
-![png](output_121_13.png)
+![png](output_122_13.png)
     
 
 
 
     
-![png](output_121_14.png)
+![png](output_122_14.png)
     
 
 
@@ -4437,7 +4447,7 @@ plt.show()
 
 
     
-![png](output_126_0.png)
+![png](output_127_0.png)
     
 
 
@@ -4474,7 +4484,7 @@ plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)
 
 
     
-![png](output_128_0.png)
+![png](output_129_0.png)
     
 
 
@@ -4571,79 +4581,79 @@ for column in cancer_rate_transformed_numeric:
 
 
     
-![png](output_134_0.png)
+![png](output_135_0.png)
     
 
 
 
     
-![png](output_134_1.png)
+![png](output_135_1.png)
     
 
 
 
     
-![png](output_134_2.png)
+![png](output_135_2.png)
     
 
 
 
     
-![png](output_134_3.png)
+![png](output_135_3.png)
     
 
 
 
     
-![png](output_134_4.png)
+![png](output_135_4.png)
     
 
 
 
     
-![png](output_134_5.png)
+![png](output_135_5.png)
     
 
 
 
     
-![png](output_134_6.png)
+![png](output_135_6.png)
     
 
 
 
     
-![png](output_134_7.png)
+![png](output_135_7.png)
     
 
 
 
     
-![png](output_134_8.png)
+![png](output_135_8.png)
     
 
 
 
     
-![png](output_134_9.png)
+![png](output_135_9.png)
     
 
 
 
     
-![png](output_134_10.png)
+![png](output_135_10.png)
     
 
 
 
     
-![png](output_134_11.png)
+![png](output_135_11.png)
     
 
 
 
     
-![png](output_134_12.png)
+![png](output_135_12.png)
     
 
 
@@ -4676,7 +4686,7 @@ display(cancer_rate_transformed_numeric.shape)
 ### 1.4.6 Centering and Scaling <a class="anchor" id="1.4.6"></a>
 
 1. All numeric variables were transformed using the standardization method to achieve a comparable scale between values.
-4. The scaled dataset is comprised of:
+2. The scaled dataset is comprised of:
     * **163 rows** (observations)
     * **15 columns** (variables)
         * **1/15 metadata** (object)
@@ -4733,73 +4743,73 @@ for column in cancer_rate_scaled_numeric:
 
 
     
-![png](output_140_0.png)
+![png](output_141_0.png)
     
 
 
 
     
-![png](output_140_1.png)
+![png](output_141_1.png)
     
 
 
 
     
-![png](output_140_2.png)
+![png](output_141_2.png)
     
 
 
 
     
-![png](output_140_3.png)
+![png](output_141_3.png)
     
 
 
 
     
-![png](output_140_4.png)
+![png](output_141_4.png)
     
 
 
 
     
-![png](output_140_5.png)
+![png](output_141_5.png)
     
 
 
 
     
-![png](output_140_6.png)
+![png](output_141_6.png)
     
 
 
 
     
-![png](output_140_7.png)
+![png](output_141_7.png)
     
 
 
 
     
-![png](output_140_8.png)
+![png](output_141_8.png)
     
 
 
 
     
-![png](output_140_9.png)
+![png](output_141_9.png)
     
 
 
 
     
-![png](output_140_10.png)
+![png](output_141_10.png)
     
 
 
 
     
-![png](output_140_11.png)
+![png](output_141_11.png)
     
 
 
@@ -4962,7 +4972,7 @@ axes = axes.ravel()
 ##################################
 for i, x_variable in enumerate(x_variables):
     ax = axes[i]
-    ax.boxplot([group[x_variable] for name, group in cancer_rate_preprocessed_combined.groupby(y_variable)])
+    ax.boxplot([group[x_variable] for name, group in cancer_rate_preprocessed_combined.groupby(y_variable, observed=True)])
     ax.set_title(f'{y_variable} Versus {x_variable}')
     ax.set_xlabel(y_variable)
     ax.set_ylabel(x_variable)
@@ -4981,7 +4991,7 @@ plt.show()
 
 
     
-![png](output_152_0.png)
+![png](output_153_0.png)
     
 
 
@@ -5018,7 +5028,7 @@ axes = axes.ravel()
 ##################################
 for i, y_variable in enumerate(y_variables):
     ax = axes[i]
-    category_counts = cancer_rate_preprocessed_categorical_combined.groupby([x_variable, y_variable]).size().unstack(fill_value=0)
+    category_counts = cancer_rate_preprocessed_categorical_combined.groupby([x_variable, y_variable], observed=True).size().unstack(fill_value=0)
     category_proportions = category_counts.div(category_counts.sum(axis=1), axis=0)
     category_proportions.plot(kind='bar', stacked=True, ax=ax)
     ax.set_title(f'{x_variable} Versus {y_variable}')
@@ -5038,7 +5048,7 @@ plt.show()
 
 
     
-![png](output_153_0.png)
+![png](output_154_0.png)
     
 
 
@@ -5489,7 +5499,7 @@ plt.show()
 
 
     
-![png](output_165_0.png)
+![png](output_166_0.png)
     
 
 
@@ -5697,57 +5707,57 @@ for i in range(iterations):
 
 ```
 
-    Iteration 0: Cost = 0.6655730513519705, Accuracy = 0.7484662576687117
-    Iteration 100: Cost = 0.44337999165463543, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.4296527297741833, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.42070497080190816, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.413061282503375, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.4061728704817939, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.39995724221500645, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.39458769409625294, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.38949596166840167, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.38497517328300895, Accuracy = 0.7484662576687117
-    Iteration 1000: Cost = 0.3809436200108279, Accuracy = 0.7975460122699386
-    Iteration 1100: Cost = 0.37727075177667163, Accuracy = 0.7852760736196319
-    Iteration 1200: Cost = 0.37387392095786326, Accuracy = 0.7914110429447853
-    Iteration 1300: Cost = 0.3706503011149609, Accuracy = 0.7791411042944786
-    Iteration 1400: Cost = 0.36756963290365535, Accuracy = 0.7852760736196319
-    Iteration 1500: Cost = 0.36458404147756973, Accuracy = 0.803680981595092
-    Iteration 1600: Cost = 0.3612766252841342, Accuracy = 0.8466257668711656
-    Iteration 1700: Cost = 0.357134360433017, Accuracy = 0.852760736196319
-    Iteration 1800: Cost = 0.35269802361655544, Accuracy = 0.8711656441717791
-    Iteration 1900: Cost = 0.34846303622133556, Accuracy = 0.8711656441717791
-    Iteration 2000: Cost = 0.3436917696319817, Accuracy = 0.8711656441717791
-    Iteration 2100: Cost = 0.33842245819855354, Accuracy = 0.8711656441717791
-    Iteration 2200: Cost = 0.33296683643984326, Accuracy = 0.8711656441717791
-    Iteration 2300: Cost = 0.32707243317904855, Accuracy = 0.8773006134969326
-    Iteration 2400: Cost = 0.3202156716142601, Accuracy = 0.8711656441717791
-    Iteration 2500: Cost = 0.31345579274924, Accuracy = 0.8711656441717791
-    Iteration 2600: Cost = 0.3069538408163979, Accuracy = 0.8711656441717791
-    Iteration 2700: Cost = 0.3008522153030943, Accuracy = 0.8834355828220859
-    Iteration 2800: Cost = 0.29504807562670776, Accuracy = 0.8773006134969326
-    Iteration 2900: Cost = 0.28949665746105524, Accuracy = 0.8834355828220859
-    Iteration 3000: Cost = 0.2834331137306993, Accuracy = 0.8834355828220859
-    Iteration 3100: Cost = 0.2773402269258411, Accuracy = 0.8895705521472392
-    Iteration 3200: Cost = 0.27144698132147027, Accuracy = 0.8895705521472392
-    Iteration 3300: Cost = 0.26569904906368097, Accuracy = 0.8895705521472392
-    Iteration 3400: Cost = 0.2601293462373859, Accuracy = 0.8895705521472392
-    Iteration 3500: Cost = 0.25519554148903284, Accuracy = 0.8895705521472392
-    Iteration 3600: Cost = 0.2504756963819801, Accuracy = 0.8895705521472392
-    Iteration 3700: Cost = 0.24553061546407004, Accuracy = 0.8957055214723927
-    Iteration 3800: Cost = 0.24082289556588482, Accuracy = 0.8957055214723927
-    Iteration 3900: Cost = 0.23648196660441367, Accuracy = 0.8957055214723927
-    Iteration 4000: Cost = 0.2325581819214636, Accuracy = 0.8957055214723927
-    Iteration 4100: Cost = 0.22900452092328547, Accuracy = 0.901840490797546
-    Iteration 4200: Cost = 0.22554933649437556, Accuracy = 0.901840490797546
-    Iteration 4300: Cost = 0.22237283262286484, Accuracy = 0.901840490797546
-    Iteration 4400: Cost = 0.21956579583200125, Accuracy = 0.901840490797546
-    Iteration 4500: Cost = 0.21687063564756745, Accuracy = 0.9079754601226994
-    Iteration 4600: Cost = 0.21428226254644192, Accuracy = 0.9079754601226994
-    Iteration 4700: Cost = 0.21185730328243121, Accuracy = 0.9141104294478528
-    Iteration 4800: Cost = 0.20951426452485125, Accuracy = 0.9202453987730062
-    Iteration 4900: Cost = 0.2072391302349501, Accuracy = 0.9202453987730062
-    Iteration 5000: Cost = 0.20503671639364385, Accuracy = 0.9202453987730062
+    Iteration 0: Cost = 0.6655730513459841, Accuracy = 0.7484662576687117
+    Iteration 100: Cost = 0.4433799916031117, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.4296527297209187, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.4207049707713461, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.41306128247154633, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.40617287045398526, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.399957242190881, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.39458769407449806, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.38949596163129635, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.38497517324765024, Accuracy = 0.7484662576687117
+    Iteration 1000: Cost = 0.38094361998405624, Accuracy = 0.7975460122699386
+    Iteration 1100: Cost = 0.3772707517499272, Accuracy = 0.7852760736196319
+    Iteration 1200: Cost = 0.37387392093517025, Accuracy = 0.7914110429447853
+    Iteration 1300: Cost = 0.37065030109024116, Accuracy = 0.7791411042944786
+    Iteration 1400: Cost = 0.3675696328690523, Accuracy = 0.7852760736196319
+    Iteration 1500: Cost = 0.3645840415235353, Accuracy = 0.803680981595092
+    Iteration 1600: Cost = 0.3612766252373598, Accuracy = 0.8466257668711656
+    Iteration 1700: Cost = 0.3571343603940606, Accuracy = 0.852760736196319
+    Iteration 1800: Cost = 0.35269802358387276, Accuracy = 0.8711656441717791
+    Iteration 1900: Cost = 0.34846303617880475, Accuracy = 0.8711656441717791
+    Iteration 2000: Cost = 0.3436917695749288, Accuracy = 0.8711656441717791
+    Iteration 2100: Cost = 0.338422458132082, Accuracy = 0.8711656441717791
+    Iteration 2200: Cost = 0.3329668363721044, Accuracy = 0.8711656441717791
+    Iteration 2300: Cost = 0.32707243309276396, Accuracy = 0.8773006134969326
+    Iteration 2400: Cost = 0.3202156715156502, Accuracy = 0.8711656441717791
+    Iteration 2500: Cost = 0.3134557926416705, Accuracy = 0.8711656441717791
+    Iteration 2600: Cost = 0.3069538407007726, Accuracy = 0.8711656441717791
+    Iteration 2700: Cost = 0.30085221518673927, Accuracy = 0.8834355828220859
+    Iteration 2800: Cost = 0.2950480755009638, Accuracy = 0.8773006134969326
+    Iteration 2900: Cost = 0.2894966573009472, Accuracy = 0.8834355828220859
+    Iteration 3000: Cost = 0.2834331135808198, Accuracy = 0.8834355828220859
+    Iteration 3100: Cost = 0.27734022675958664, Accuracy = 0.8895705521472392
+    Iteration 3200: Cost = 0.27144698115197863, Accuracy = 0.8895705521472392
+    Iteration 3300: Cost = 0.26569904888847556, Accuracy = 0.8895705521472392
+    Iteration 3400: Cost = 0.2601293460642317, Accuracy = 0.8895705521472392
+    Iteration 3500: Cost = 0.25519554130519556, Accuracy = 0.8895705521472392
+    Iteration 3600: Cost = 0.2504756961908363, Accuracy = 0.8895705521472392
+    Iteration 3700: Cost = 0.24553061524899952, Accuracy = 0.8957055214723927
+    Iteration 3800: Cost = 0.24082289534111034, Accuracy = 0.8957055214723927
+    Iteration 3900: Cost = 0.23648196638176655, Accuracy = 0.8957055214723927
+    Iteration 4000: Cost = 0.23255818171571618, Accuracy = 0.8957055214723927
+    Iteration 4100: Cost = 0.22900452070781954, Accuracy = 0.901840490797546
+    Iteration 4200: Cost = 0.22554933629064006, Accuracy = 0.901840490797546
+    Iteration 4300: Cost = 0.2223728324241222, Accuracy = 0.901840490797546
+    Iteration 4400: Cost = 0.2195657956442702, Accuracy = 0.901840490797546
+    Iteration 4500: Cost = 0.21687063543853785, Accuracy = 0.9079754601226994
+    Iteration 4600: Cost = 0.21428226236032571, Accuracy = 0.9079754601226994
+    Iteration 4700: Cost = 0.2118573030973284, Accuracy = 0.9141104294478528
+    Iteration 4800: Cost = 0.20951426434007592, Accuracy = 0.9202453987730062
+    Iteration 4900: Cost = 0.20723913006547426, Accuracy = 0.9202453987730062
+    Iteration 5000: Cost = 0.2050367162135878, Accuracy = 0.9202453987730062
     
 
 
@@ -5775,7 +5785,7 @@ plt.show()
 
 
     
-![png](output_179_0.png)
+![png](output_180_0.png)
     
 
 
@@ -5802,7 +5812,7 @@ plt.show()
 
 
     
-![png](output_180_0.png)
+![png](output_181_0.png)
     
 
 
@@ -5988,57 +5998,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6655730513519705, Accuracy = 0.7484662576687117
-    Iteration 100: Cost = 0.4462035799912659, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.43307112414387683, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.42457535971007343, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.41765452103112666, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.41170724984703505, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.4063499603006234, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.40141996484045106, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.3969570506741036, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.39285529655789025, Accuracy = 0.7484662576687117
-    Iteration 1000: Cost = 0.38913393420566117, Accuracy = 0.7484662576687117
-    Iteration 1100: Cost = 0.38571148027548785, Accuracy = 0.7484662576687117
-    Iteration 1200: Cost = 0.3825210045646434, Accuracy = 0.7914110429447853
-    Iteration 1300: Cost = 0.37937159603685555, Accuracy = 0.803680981595092
-    Iteration 1400: Cost = 0.37642648361234926, Accuracy = 0.803680981595092
-    Iteration 1500: Cost = 0.37341353354514417, Accuracy = 0.803680981595092
-    Iteration 1600: Cost = 0.3704330888484434, Accuracy = 0.8098159509202454
-    Iteration 1700: Cost = 0.3677665430279169, Accuracy = 0.8098159509202454
-    Iteration 1800: Cost = 0.36536349299758103, Accuracy = 0.8159509202453987
-    Iteration 1900: Cost = 0.3631082869687799, Accuracy = 0.803680981595092
-    Iteration 2000: Cost = 0.360950443909029, Accuracy = 0.8159509202453987
-    Iteration 2100: Cost = 0.3588633922570358, Accuracy = 0.8466257668711656
-    Iteration 2200: Cost = 0.3566944719925671, Accuracy = 0.8588957055214724
-    Iteration 2300: Cost = 0.3543498283485834, Accuracy = 0.8650306748466258
-    Iteration 2400: Cost = 0.35192154110725726, Accuracy = 0.8773006134969326
-    Iteration 2500: Cost = 0.3495143995277487, Accuracy = 0.8834355828220859
-    Iteration 2600: Cost = 0.34706384497444936, Accuracy = 0.8834355828220859
-    Iteration 2700: Cost = 0.34402578656122357, Accuracy = 0.8834355828220859
-    Iteration 2800: Cost = 0.3404546577239142, Accuracy = 0.8895705521472392
-    Iteration 2900: Cost = 0.33633340551158214, Accuracy = 0.8895705521472392
-    Iteration 3000: Cost = 0.3317444198337502, Accuracy = 0.8895705521472392
-    Iteration 3100: Cost = 0.3264606040483411, Accuracy = 0.8957055214723927
-    Iteration 3200: Cost = 0.32077768315962374, Accuracy = 0.901840490797546
-    Iteration 3300: Cost = 0.31478413087215135, Accuracy = 0.901840490797546
-    Iteration 3400: Cost = 0.3078686074258959, Accuracy = 0.901840490797546
-    Iteration 3500: Cost = 0.30064015748204737, Accuracy = 0.901840490797546
-    Iteration 3600: Cost = 0.29328995535853325, Accuracy = 0.9079754601226994
-    Iteration 3700: Cost = 0.28584435234367245, Accuracy = 0.9079754601226994
-    Iteration 3800: Cost = 0.27821774403717314, Accuracy = 0.9079754601226994
-    Iteration 3900: Cost = 0.26988387941259606, Accuracy = 0.9141104294478528
-    Iteration 4000: Cost = 0.26115814864046644, Accuracy = 0.9141104294478528
-    Iteration 4100: Cost = 0.2528971596046284, Accuracy = 0.9141104294478528
-    Iteration 4200: Cost = 0.24518856179189225, Accuracy = 0.9079754601226994
-    Iteration 4300: Cost = 0.2370974152519641, Accuracy = 0.9079754601226994
-    Iteration 4400: Cost = 0.22830112643766665, Accuracy = 0.9079754601226994
-    Iteration 4500: Cost = 0.2192976829867574, Accuracy = 0.9079754601226994
-    Iteration 4600: Cost = 0.21094110711087927, Accuracy = 0.9141104294478528
-    Iteration 4700: Cost = 0.20290464572348446, Accuracy = 0.9202453987730062
-    Iteration 4800: Cost = 0.19480835010431513, Accuracy = 0.9263803680981595
-    Iteration 4900: Cost = 0.1871322306145051, Accuracy = 0.9386503067484663
-    Iteration 5000: Cost = 0.17995578256489161, Accuracy = 0.9447852760736196
+    Iteration 0: Cost = 0.6655730513459841, Accuracy = 0.7484662576687117
+    Iteration 100: Cost = 0.44620357994035403, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.43307112409474996, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.42457535967861454, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.41765452099976647, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.41170724982013035, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.4063499602749478, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.40141996486069714, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.39695705069308856, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.39285529652649204, Accuracy = 0.7484662576687117
+    Iteration 1000: Cost = 0.38913393417512976, Accuracy = 0.7484662576687117
+    Iteration 1100: Cost = 0.3857114802428095, Accuracy = 0.7484662576687117
+    Iteration 1200: Cost = 0.3825210045073452, Accuracy = 0.7914110429447853
+    Iteration 1300: Cost = 0.37937159597852754, Accuracy = 0.803680981595092
+    Iteration 1400: Cost = 0.3764264835577567, Accuracy = 0.803680981595092
+    Iteration 1500: Cost = 0.37341353349753437, Accuracy = 0.803680981595092
+    Iteration 1600: Cost = 0.3704330887924824, Accuracy = 0.8098159509202454
+    Iteration 1700: Cost = 0.3677665429681632, Accuracy = 0.8098159509202454
+    Iteration 1800: Cost = 0.3653634929369406, Accuracy = 0.8159509202453987
+    Iteration 1900: Cost = 0.36310828688489394, Accuracy = 0.803680981595092
+    Iteration 2000: Cost = 0.3609504438310516, Accuracy = 0.8159509202453987
+    Iteration 2100: Cost = 0.35886339217069807, Accuracy = 0.8466257668711656
+    Iteration 2200: Cost = 0.3566944718648629, Accuracy = 0.8588957055214724
+    Iteration 2300: Cost = 0.35434982822269445, Accuracy = 0.8650306748466258
+    Iteration 2400: Cost = 0.35192154096340367, Accuracy = 0.8773006134969326
+    Iteration 2500: Cost = 0.34951439928775097, Accuracy = 0.8834355828220859
+    Iteration 2600: Cost = 0.3470638446792961, Accuracy = 0.8834355828220859
+    Iteration 2700: Cost = 0.3440257861485014, Accuracy = 0.8834355828220859
+    Iteration 2800: Cost = 0.3404546571268586, Accuracy = 0.8895705521472392
+    Iteration 2900: Cost = 0.3363334046862561, Accuracy = 0.8895705521472392
+    Iteration 3000: Cost = 0.3317444189334096, Accuracy = 0.8895705521472392
+    Iteration 3100: Cost = 0.32646060277262845, Accuracy = 0.8957055214723927
+    Iteration 3200: Cost = 0.32077768163859566, Accuracy = 0.901840490797546
+    Iteration 3300: Cost = 0.31478412904161457, Accuracy = 0.901840490797546
+    Iteration 3400: Cost = 0.3078686049768993, Accuracy = 0.901840490797546
+    Iteration 3500: Cost = 0.3006401546086458, Accuracy = 0.901840490797546
+    Iteration 3600: Cost = 0.2932899519596623, Accuracy = 0.9079754601226994
+    Iteration 3700: Cost = 0.28584434868765835, Accuracy = 0.9079754601226994
+    Iteration 3800: Cost = 0.2782177401479206, Accuracy = 0.9079754601226994
+    Iteration 3900: Cost = 0.2698838742701279, Accuracy = 0.9141104294478528
+    Iteration 4000: Cost = 0.2611581439010262, Accuracy = 0.9141104294478528
+    Iteration 4100: Cost = 0.25289715446609773, Accuracy = 0.9141104294478528
+    Iteration 4200: Cost = 0.24518855563495806, Accuracy = 0.9079754601226994
+    Iteration 4300: Cost = 0.2370974098251177, Accuracy = 0.9079754601226994
+    Iteration 4400: Cost = 0.22830112023860194, Accuracy = 0.9079754601226994
+    Iteration 4500: Cost = 0.21929767663337, Accuracy = 0.9079754601226994
+    Iteration 4600: Cost = 0.21094110059481677, Accuracy = 0.9141104294478528
+    Iteration 4700: Cost = 0.20290463857310742, Accuracy = 0.9202453987730062
+    Iteration 4800: Cost = 0.19480834249568046, Accuracy = 0.9263803680981595
+    Iteration 4900: Cost = 0.18713222331393783, Accuracy = 0.9386503067484663
+    Iteration 5000: Cost = 0.1799557750100305, Accuracy = 0.9447852760736196
     
 
 
@@ -6066,7 +6076,7 @@ plt.show()
 
 
     
-![png](output_185_0.png)
+![png](output_186_0.png)
     
 
 
@@ -6093,7 +6103,7 @@ plt.show()
 
 
     
-![png](output_186_0.png)
+![png](output_187_0.png)
     
 
 
@@ -6279,57 +6289,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6655730513519705, Accuracy = 0.7484662576687117
-    Iteration 100: Cost = 0.44429964390155074, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.43045876994697085, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.4216253632457659, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.41429556819902924, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.407808510163234, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.4019708537957727, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.39684543072268164, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.3920371113720447, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.38778015562298945, Accuracy = 0.7484662576687117
-    Iteration 1000: Cost = 0.38395598783499835, Accuracy = 0.7484662576687117
-    Iteration 1100: Cost = 0.38044959933609496, Accuracy = 0.7975460122699386
-    Iteration 1200: Cost = 0.3771724996008687, Accuracy = 0.7914110429447853
-    Iteration 1300: Cost = 0.37407878873036193, Accuracy = 0.7852760736196319
-    Iteration 1400: Cost = 0.3711554982481661, Accuracy = 0.7975460122699386
-    Iteration 1500: Cost = 0.3683436832278206, Accuracy = 0.7791411042944786
-    Iteration 1600: Cost = 0.3655033686680177, Accuracy = 0.7791411042944786
-    Iteration 1700: Cost = 0.36275189306899513, Accuracy = 0.7852760736196319
-    Iteration 1800: Cost = 0.3597398271746222, Accuracy = 0.8098159509202454
-    Iteration 1900: Cost = 0.3566011955167585, Accuracy = 0.8404907975460123
-    Iteration 2000: Cost = 0.35288720939630647, Accuracy = 0.852760736196319
-    Iteration 2100: Cost = 0.3484851330217932, Accuracy = 0.8711656441717791
-    Iteration 2200: Cost = 0.3432958874841974, Accuracy = 0.8711656441717791
-    Iteration 2300: Cost = 0.33760321157554923, Accuracy = 0.8711656441717791
-    Iteration 2400: Cost = 0.33180949325055176, Accuracy = 0.8834355828220859
-    Iteration 2500: Cost = 0.3261602386561661, Accuracy = 0.8834355828220859
-    Iteration 2600: Cost = 0.3204014679517702, Accuracy = 0.8834355828220859
-    Iteration 2700: Cost = 0.3144087316835841, Accuracy = 0.8895705521472392
-    Iteration 2800: Cost = 0.3082058865342837, Accuracy = 0.8895705521472392
-    Iteration 2900: Cost = 0.301591694439833, Accuracy = 0.8895705521472392
-    Iteration 3000: Cost = 0.29446005073465753, Accuracy = 0.901840490797546
-    Iteration 3100: Cost = 0.2875654463067539, Accuracy = 0.901840490797546
-    Iteration 3200: Cost = 0.2807765512862666, Accuracy = 0.901840490797546
-    Iteration 3300: Cost = 0.27309660385270446, Accuracy = 0.901840490797546
-    Iteration 3400: Cost = 0.26454810911961407, Accuracy = 0.9079754601226994
-    Iteration 3500: Cost = 0.25538936911769283, Accuracy = 0.9141104294478528
-    Iteration 3600: Cost = 0.2470696004687147, Accuracy = 0.9141104294478528
-    Iteration 3700: Cost = 0.23946139524956278, Accuracy = 0.9079754601226994
-    Iteration 3800: Cost = 0.23268259797072838, Accuracy = 0.9079754601226994
-    Iteration 3900: Cost = 0.22675946664763505, Accuracy = 0.9079754601226994
-    Iteration 4000: Cost = 0.22160929548992525, Accuracy = 0.9141104294478528
-    Iteration 4100: Cost = 0.2167888900502071, Accuracy = 0.9141104294478528
-    Iteration 4200: Cost = 0.21222808925582234, Accuracy = 0.9141104294478528
-    Iteration 4300: Cost = 0.20792279041601808, Accuracy = 0.9141104294478528
-    Iteration 4400: Cost = 0.20393108475817381, Accuracy = 0.9202453987730062
-    Iteration 4500: Cost = 0.20016016310514442, Accuracy = 0.9263803680981595
-    Iteration 4600: Cost = 0.19424766890014947, Accuracy = 0.9202453987730062
-    Iteration 4700: Cost = 0.1883268128700009, Accuracy = 0.9325153374233128
-    Iteration 4800: Cost = 0.18382694569588456, Accuracy = 0.9325153374233128
-    Iteration 4900: Cost = 0.1790868990533559, Accuracy = 0.9447852760736196
-    Iteration 5000: Cost = 0.17509776446937939, Accuracy = 0.9447852760736196
+    Iteration 0: Cost = 0.6655730513459841, Accuracy = 0.7484662576687117
+    Iteration 100: Cost = 0.4442996438506513, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.4304587698949185, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.42162536321474514, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.4142955681666065, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.4078085101343822, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.4019708537703823, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.39684543068242, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.3920371113336695, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.38778015559099654, Accuracy = 0.7484662576687117
+    Iteration 1000: Cost = 0.38395598780420337, Accuracy = 0.7484662576687117
+    Iteration 1100: Cost = 0.38044959930593164, Accuracy = 0.7975460122699386
+    Iteration 1200: Cost = 0.3771724995725463, Accuracy = 0.7914110429447853
+    Iteration 1300: Cost = 0.3740787887008591, Accuracy = 0.7852760736196319
+    Iteration 1400: Cost = 0.37115549826650257, Accuracy = 0.7975460122699386
+    Iteration 1500: Cost = 0.36834368323684114, Accuracy = 0.7791411042944786
+    Iteration 1600: Cost = 0.36550336866647776, Accuracy = 0.7791411042944786
+    Iteration 1700: Cost = 0.3627518930505024, Accuracy = 0.7852760736196319
+    Iteration 1800: Cost = 0.3597398271534722, Accuracy = 0.8098159509202454
+    Iteration 1900: Cost = 0.35660119548076413, Accuracy = 0.8404907975460123
+    Iteration 2000: Cost = 0.3528872093091873, Accuracy = 0.852760736196319
+    Iteration 2100: Cost = 0.3484851329147474, Accuracy = 0.8711656441717791
+    Iteration 2200: Cost = 0.3432958873638266, Accuracy = 0.8711656441717791
+    Iteration 2300: Cost = 0.3376032114261907, Accuracy = 0.8711656441717791
+    Iteration 2400: Cost = 0.3318094930879634, Accuracy = 0.8834355828220859
+    Iteration 2500: Cost = 0.32616023844845315, Accuracy = 0.8834355828220859
+    Iteration 2600: Cost = 0.32040146774770567, Accuracy = 0.8834355828220859
+    Iteration 2700: Cost = 0.3144087314521224, Accuracy = 0.8895705521472392
+    Iteration 2800: Cost = 0.3082058862774129, Accuracy = 0.8895705521472392
+    Iteration 2900: Cost = 0.30159169415707976, Accuracy = 0.8895705521472392
+    Iteration 3000: Cost = 0.294460050444439, Accuracy = 0.901840490797546
+    Iteration 3100: Cost = 0.287565445986065, Accuracy = 0.901840490797546
+    Iteration 3200: Cost = 0.2807765509799802, Accuracy = 0.901840490797546
+    Iteration 3300: Cost = 0.27309660354153664, Accuracy = 0.901840490797546
+    Iteration 3400: Cost = 0.2645481088076783, Accuracy = 0.9079754601226994
+    Iteration 3500: Cost = 0.25538936882638313, Accuracy = 0.9141104294478528
+    Iteration 3600: Cost = 0.2470696001583417, Accuracy = 0.9141104294478528
+    Iteration 3700: Cost = 0.2394613948970441, Accuracy = 0.9079754601226994
+    Iteration 3800: Cost = 0.23268259764738236, Accuracy = 0.9079754601226994
+    Iteration 3900: Cost = 0.2267594663589448, Accuracy = 0.9079754601226994
+    Iteration 4000: Cost = 0.2216092951999511, Accuracy = 0.9141104294478528
+    Iteration 4100: Cost = 0.2167888897515206, Accuracy = 0.9141104294478528
+    Iteration 4200: Cost = 0.212228088956155, Accuracy = 0.9141104294478528
+    Iteration 4300: Cost = 0.2079227901275921, Accuracy = 0.9141104294478528
+    Iteration 4400: Cost = 0.2039310844851094, Accuracy = 0.9202453987730062
+    Iteration 4500: Cost = 0.20016016283324173, Accuracy = 0.9263803680981595
+    Iteration 4600: Cost = 0.19424766862658757, Accuracy = 0.9202453987730062
+    Iteration 4700: Cost = 0.18832681261487702, Accuracy = 0.9325153374233128
+    Iteration 4800: Cost = 0.18382694548194442, Accuracy = 0.9325153374233128
+    Iteration 4900: Cost = 0.1790869056141248, Accuracy = 0.9447852760736196
+    Iteration 5000: Cost = 0.1750977650395162, Accuracy = 0.9447852760736196
     
 
 
@@ -6357,7 +6367,7 @@ plt.show()
 
 
     
-![png](output_191_0.png)
+![png](output_192_0.png)
     
 
 
@@ -6384,7 +6394,7 @@ plt.show()
 
 
     
-![png](output_192_0.png)
+![png](output_193_0.png)
     
 
 
@@ -6569,57 +6579,57 @@ for i in range(iterations):
         print(f"Iteration {i}: Cost = {cost}, Accuracy = {accuracy}")
 ```
 
-    Iteration 0: Cost = 0.6655730513519705, Accuracy = 0.7484662576687117
-    Iteration 100: Cost = 0.44718825489399394, Accuracy = 0.7484662576687117
-    Iteration 200: Cost = 0.43400594664030084, Accuracy = 0.7484662576687117
-    Iteration 300: Cost = 0.4257228664966347, Accuracy = 0.7484662576687117
-    Iteration 400: Cost = 0.4190516925903125, Accuracy = 0.7484662576687117
-    Iteration 500: Cost = 0.4134013292735411, Accuracy = 0.7484662576687117
-    Iteration 600: Cost = 0.4083585633198166, Accuracy = 0.7484662576687117
-    Iteration 700: Cost = 0.4037088548290823, Accuracy = 0.7484662576687117
-    Iteration 800: Cost = 0.39966601427718335, Accuracy = 0.7484662576687117
-    Iteration 900: Cost = 0.39594057532140947, Accuracy = 0.7484662576687117
-    Iteration 1000: Cost = 0.3925139483320749, Accuracy = 0.7484662576687117
-    Iteration 1100: Cost = 0.38909789089024854, Accuracy = 0.7484662576687117
-    Iteration 1200: Cost = 0.3859648376461514, Accuracy = 0.7484662576687117
-    Iteration 1300: Cost = 0.3829541532661204, Accuracy = 0.7791411042944786
-    Iteration 1400: Cost = 0.38006500342073213, Accuracy = 0.7791411042944786
-    Iteration 1500: Cost = 0.37742536107438396, Accuracy = 0.7791411042944786
-    Iteration 1600: Cost = 0.3748963254187374, Accuracy = 0.803680981595092
-    Iteration 1700: Cost = 0.37241872043683283, Accuracy = 0.803680981595092
-    Iteration 1800: Cost = 0.36997305640633676, Accuracy = 0.8098159509202454
-    Iteration 1900: Cost = 0.3675035672115191, Accuracy = 0.8159509202453987
-    Iteration 2000: Cost = 0.3648282909497678, Accuracy = 0.7975460122699386
-    Iteration 2100: Cost = 0.3620304435865962, Accuracy = 0.8159509202453987
-    Iteration 2200: Cost = 0.3591947317998126, Accuracy = 0.8588957055214724
-    Iteration 2300: Cost = 0.35638431976187446, Accuracy = 0.8711656441717791
-    Iteration 2400: Cost = 0.3532542424136821, Accuracy = 0.8834355828220859
-    Iteration 2500: Cost = 0.3500658151702217, Accuracy = 0.8588957055214724
-    Iteration 2600: Cost = 0.3463750092649884, Accuracy = 0.8650306748466258
-    Iteration 2700: Cost = 0.34236941843663377, Accuracy = 0.8650306748466258
-    Iteration 2800: Cost = 0.3383693028183223, Accuracy = 0.8650306748466258
-    Iteration 2900: Cost = 0.3334202259570756, Accuracy = 0.8650306748466258
-    Iteration 3000: Cost = 0.3214396170399764, Accuracy = 0.8711656441717791
-    Iteration 3100: Cost = 0.3091981137736961, Accuracy = 0.8773006134969326
-    Iteration 3200: Cost = 0.29804017477679723, Accuracy = 0.8773006134969326
-    Iteration 3300: Cost = 0.2871442159702661, Accuracy = 0.8773006134969326
-    Iteration 3400: Cost = 0.2762105091956162, Accuracy = 0.8773006134969326
-    Iteration 3500: Cost = 0.2649560804833031, Accuracy = 0.8834355828220859
-    Iteration 3600: Cost = 0.253382562557902, Accuracy = 0.9263803680981595
-    Iteration 3700: Cost = 0.2420466877004572, Accuracy = 0.9263803680981595
-    Iteration 3800: Cost = 0.23020510840046451, Accuracy = 0.9263803680981595
-    Iteration 3900: Cost = 0.21841095478633638, Accuracy = 0.9325153374233128
-    Iteration 4000: Cost = 0.20712521537328352, Accuracy = 0.9447852760736196
-    Iteration 4100: Cost = 0.1955794071336753, Accuracy = 0.950920245398773
-    Iteration 4200: Cost = 0.18458063395853705, Accuracy = 0.950920245398773
-    Iteration 4300: Cost = 0.17151488911578616, Accuracy = 0.9570552147239264
-    Iteration 4400: Cost = 0.15857163162598373, Accuracy = 0.9693251533742331
-    Iteration 4500: Cost = 0.14809318432727417, Accuracy = 0.9693251533742331
-    Iteration 4600: Cost = 0.13931460366074877, Accuracy = 0.9693251533742331
-    Iteration 4700: Cost = 0.13045608405568113, Accuracy = 0.9693251533742331
-    Iteration 4800: Cost = 0.1222876074524626, Accuracy = 0.9754601226993865
-    Iteration 4900: Cost = 0.1161674176708189, Accuracy = 0.9693251533742331
-    Iteration 5000: Cost = 0.10962180845769681, Accuracy = 0.9693251533742331
+    Iteration 0: Cost = 0.6655730513459841, Accuracy = 0.7484662576687117
+    Iteration 100: Cost = 0.4471882548439684, Accuracy = 0.7484662576687117
+    Iteration 200: Cost = 0.4340059465903791, Accuracy = 0.7484662576687117
+    Iteration 300: Cost = 0.42572286646361174, Accuracy = 0.7484662576687117
+    Iteration 400: Cost = 0.4190516925596788, Accuracy = 0.7484662576687117
+    Iteration 500: Cost = 0.41340132924702017, Accuracy = 0.7484662576687117
+    Iteration 600: Cost = 0.4083585632783172, Accuracy = 0.7484662576687117
+    Iteration 700: Cost = 0.40370885483515645, Accuracy = 0.7484662576687117
+    Iteration 800: Cost = 0.39966601424107273, Accuracy = 0.7484662576687117
+    Iteration 900: Cost = 0.3959405752862915, Accuracy = 0.7484662576687117
+    Iteration 1000: Cost = 0.3925139482750496, Accuracy = 0.7484662576687117
+    Iteration 1100: Cost = 0.38909789083405943, Accuracy = 0.7484662576687117
+    Iteration 1200: Cost = 0.3859648375850686, Accuracy = 0.7484662576687117
+    Iteration 1300: Cost = 0.3829541532076341, Accuracy = 0.7791411042944786
+    Iteration 1400: Cost = 0.38006500336687654, Accuracy = 0.7791411042944786
+    Iteration 1500: Cost = 0.3774253610223152, Accuracy = 0.7791411042944786
+    Iteration 1600: Cost = 0.3748963253655994, Accuracy = 0.803680981595092
+    Iteration 1700: Cost = 0.37241872038151264, Accuracy = 0.803680981595092
+    Iteration 1800: Cost = 0.3699730563456403, Accuracy = 0.8098159509202454
+    Iteration 1900: Cost = 0.3675035671505679, Accuracy = 0.8159509202453987
+    Iteration 2000: Cost = 0.3648282908730172, Accuracy = 0.7975460122699386
+    Iteration 2100: Cost = 0.3620304434971297, Accuracy = 0.8159509202453987
+    Iteration 2200: Cost = 0.3591947316980273, Accuracy = 0.8588957055214724
+    Iteration 2300: Cost = 0.35638431963086803, Accuracy = 0.8711656441717791
+    Iteration 2400: Cost = 0.3532542422553207, Accuracy = 0.8834355828220859
+    Iteration 2500: Cost = 0.35006581496068745, Accuracy = 0.8588957055214724
+    Iteration 2600: Cost = 0.34637500898566587, Accuracy = 0.8650306748466258
+    Iteration 2700: Cost = 0.34236941811180965, Accuracy = 0.8650306748466258
+    Iteration 2800: Cost = 0.3383693024175202, Accuracy = 0.8650306748466258
+    Iteration 2900: Cost = 0.33342022543192495, Accuracy = 0.8650306748466258
+    Iteration 3000: Cost = 0.32143961616134575, Accuracy = 0.8711656441717791
+    Iteration 3100: Cost = 0.30919811253422164, Accuracy = 0.8773006134969326
+    Iteration 3200: Cost = 0.29804017298474006, Accuracy = 0.8773006134969326
+    Iteration 3300: Cost = 0.28714421350609665, Accuracy = 0.8773006134969326
+    Iteration 3400: Cost = 0.2762105059445396, Accuracy = 0.8773006134969326
+    Iteration 3500: Cost = 0.2649560761026612, Accuracy = 0.8834355828220859
+    Iteration 3600: Cost = 0.2533825573676071, Accuracy = 0.9263803680981595
+    Iteration 3700: Cost = 0.24204668170404195, Accuracy = 0.9263803680981595
+    Iteration 3800: Cost = 0.23020510143215991, Accuracy = 0.9263803680981595
+    Iteration 3900: Cost = 0.2184109471402505, Accuracy = 0.9325153374233128
+    Iteration 4000: Cost = 0.20712520764420622, Accuracy = 0.9447852760736196
+    Iteration 4100: Cost = 0.19557939882024267, Accuracy = 0.950920245398773
+    Iteration 4200: Cost = 0.18458062553891996, Accuracy = 0.950920245398773
+    Iteration 4300: Cost = 0.1715148804343643, Accuracy = 0.9570552147239264
+    Iteration 4400: Cost = 0.15857088322766363, Accuracy = 0.9693251533742331
+    Iteration 4500: Cost = 0.14809317426409505, Accuracy = 0.9693251533742331
+    Iteration 4600: Cost = 0.13931547407546718, Accuracy = 0.9693251533742331
+    Iteration 4700: Cost = 0.13045691441999482, Accuracy = 0.9693251533742331
+    Iteration 4800: Cost = 0.12228701898492958, Accuracy = 0.9754601226993865
+    Iteration 4900: Cost = 0.11616699410084247, Accuracy = 0.9693251533742331
+    Iteration 5000: Cost = 0.10962132996862471, Accuracy = 0.9693251533742331
     
 
 
@@ -6647,7 +6657,7 @@ plt.show()
 
 
     
-![png](output_197_0.png)
+![png](output_198_0.png)
     
 
 
@@ -6674,7 +6684,7 @@ plt.show()
 
 
     
-![png](output_198_0.png)
+![png](output_199_0.png)
     
 
 
@@ -6735,25 +6745,25 @@ display(ENR_summary)
     <tr>
       <th>1</th>
       <td>LOSS</td>
-      <td>0.109622</td>
+      <td>0.109621</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>2</th>
       <td>LAYER 1 MEAN WEIGHT</td>
-      <td>0.275963</td>
+      <td>0.275964</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>3</th>
       <td>LAYER 2 MEAN WEIGHT</td>
-      <td>0.374856</td>
+      <td>0.374857</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>4</th>
       <td>LAYER 3 MEAN WEIGHT</td>
-      <td>0.371444</td>
+      <td>0.371431</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
@@ -6940,25 +6950,25 @@ display(model_performance_comparison)
     <tr>
       <th>19</th>
       <td>LOSS</td>
-      <td>0.109622</td>
+      <td>0.109621</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>20</th>
       <td>LAYER 1 MEAN WEIGHT</td>
-      <td>0.275963</td>
+      <td>0.275964</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>21</th>
       <td>LAYER 2 MEAN WEIGHT</td>
-      <td>0.374856</td>
+      <td>0.374857</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
       <th>22</th>
       <td>LAYER 3 MEAN WEIGHT</td>
-      <td>0.371444</td>
+      <td>0.371431</td>
       <td>ElasticNet Regularization</td>
     </tr>
     <tr>
@@ -7059,7 +7069,7 @@ plt.show()
 
 
     
-![png](output_203_0.png)
+![png](output_204_0.png)
     
 
 
@@ -7123,7 +7133,7 @@ model_performance_comparison_loss
     <tr>
       <th>3</th>
       <td>LOSS</td>
-      <td>0.109622</td>
+      <td>0.109621</td>
       <td>ElasticNet Regularization</td>
     </tr>
   </tbody>
@@ -7150,7 +7160,7 @@ plt.show()
 
 
     
-![png](output_205_0.png)
+![png](output_206_0.png)
     
 
 
@@ -7234,21 +7244,21 @@ NN_layer_mean_weight_plot
       <td>0.878401</td>
       <td>0.493354</td>
       <td>0.537587</td>
-      <td>0.275963</td>
+      <td>0.275964</td>
     </tr>
     <tr>
       <th>LAYER 2 MEAN WEIGHT</th>
       <td>0.663882</td>
       <td>0.413750</td>
       <td>0.503285</td>
-      <td>0.374856</td>
+      <td>0.374857</td>
     </tr>
     <tr>
       <th>LAYER 3 MEAN WEIGHT</th>
       <td>0.662323</td>
       <td>0.390737</td>
       <td>0.487109</td>
-      <td>0.371444</td>
+      <td>0.371431</td>
     </tr>
     <tr>
       <th>LAYER 4 MEAN WEIGHT</th>
@@ -7282,14 +7292,14 @@ for container in NN_layer_mean_weight_plot.containers:
 
 
     
-![png](output_208_0.png)
+![png](output_209_0.png)
     
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-![Project50_Summary.png](attachment:b01c4dd4-25bb-45cf-ab4d-66573db9e5aa.png)
+![Project50_Summary.png](b01c4dd4-25bb-45cf-ab4d-66573db9e5aa.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
