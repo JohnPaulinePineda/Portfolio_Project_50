@@ -4299,7 +4299,7 @@ for numeric_column_a, numeric_column_b in itertools.combinations(cancer_rate_imp
 # for all numeric columns
 ##################################
 cancer_rate_imputed_numeric_summary = cancer_rate_imputed_numeric.from_dict(cancer_rate_imputed_numeric_correlation_pairs, orient='index')
-cancer_rate_imputed_numeric_summary.columns = ['Pearson.Correlation.Coefficient', 'Correlation.PValue']
+cancer_rate_imputed_numeric_summary.columns = ['Pearson.Correlation.Coefficient', 'T.Test.PValue']
 display(cancer_rate_imputed_numeric_summary.sort_values(by=['Pearson.Correlation.Coefficient'], ascending=False).head(20))
 ```
 
@@ -4323,7 +4323,7 @@ display(cancer_rate_imputed_numeric_summary.sort_values(by=['Pearson.Correlation
     <tr style="text-align: right;">
       <th></th>
       <th>Pearson.Correlation.Coefficient</th>
-      <th>Correlation.PValue</th>
+      <th>T.Test.PValue</th>
     </tr>
   </thead>
   <tbody>
@@ -5058,15 +5058,15 @@ plt.show()
     * **Null**: Difference in the means between groups LOW and HIGH is equal to zero  
     * **Alternative**: Difference in the means between groups LOW and HIGH is not equal to zero   
 2. There is sufficient evidence to conclude of a statistically significant difference between the means of the numeric measurements obtained from LOW and HIGH groups of the <span style="color: #FF0000">CANRAT</span> target variable in 9 of the 12 numeric predictors given their high t-test statistic values with reported low p-values less than the significance level of 0.05.
-    * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, Correlation.PValue=0.000
-    * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">LIFEXP</span>: T.Test.Statistic=-10.979, Correlation.PValue=0.000  
-    * <span style="color: #FF0000">TUBINC</span>: T.Test.Statistic=+9.609, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">DTHCMD</span>: T.Test.Statistic=+8.376, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">CO2EMI</span>: T.Test.Statistic=-7.031, Correlation.PValue=0.000  
-    * <span style="color: #FF0000">URBPOP</span>: T.Test.Statistic=-6.541, Correlation.PValue=0.000   
-    * <span style="color: #FF0000">POPGRO</span>: T.Test.Statistic=+4.905, Correlation.PValue=0.000
-    * <span style="color: #FF0000">GHGEMI</span>: T.Test.Statistic=-2.243, Correlation.PValue=0.026
+    * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, T.Test.PValue=0.000
+    * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">LIFEXP</span>: T.Test.Statistic=-10.979, T.Test.PValue=0.000  
+    * <span style="color: #FF0000">TUBINC</span>: T.Test.Statistic=+9.609, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">DTHCMD</span>: T.Test.Statistic=+8.376, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">CO2EMI</span>: T.Test.Statistic=-7.031, T.Test.PValue=0.000  
+    * <span style="color: #FF0000">URBPOP</span>: T.Test.Statistic=-6.541, T.Test.PValue=0.000   
+    * <span style="color: #FF0000">POPGRO</span>: T.Test.Statistic=+4.905, T.Test.PValue=0.000
+    * <span style="color: #FF0000">GHGEMI</span>: T.Test.Statistic=-2.243, T.Test.PValue=0.026
 3. The relationship between the categorical predictors to the <span style="color: #FF0000">CANRAT</span> target variable was statistically evaluated using the following hypotheses:
     * **Null**: The categorical predictor is independent of the categorical target variable 
     * **Alternative**: The categorical predictor is dependent of the categorical target variable    
@@ -5280,15 +5280,15 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['ChiSquare.
 
 ### 1.6.1 Premodelling Data Description <a class="anchor" id="1.6.1"></a>
 1. All the predictor variables determined to have a statistically significant difference between the means of the numeric measurements obtained from LOW and HIGH groups of the <span style="color: #FF0000">CANRAT</span> target variable were used for the subsequent modelling process.
-    * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, Correlation.PValue=0.000
-    * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">LIFEXP</span>: T.Test.Statistic=-10.979, Correlation.PValue=0.000  
-    * <span style="color: #FF0000">TUBINC</span>: T.Test.Statistic=+9.609, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">DTHCMD</span>: T.Test.Statistic=+8.376, Correlation.PValue=0.000 
-    * <span style="color: #FF0000">CO2EMI</span>: T.Test.Statistic=-7.031, Correlation.PValue=0.000  
-    * <span style="color: #FF0000">URBPOP</span>: T.Test.Statistic=-6.541, Correlation.PValue=0.000   
-    * <span style="color: #FF0000">POPGRO</span>: T.Test.Statistic=+4.905, Correlation.PValue=0.000
-    * <span style="color: #FF0000">GHGEMI</span>: T.Test.Statistic=-2.243, Correlation.PValue=0.026
+    * <span style="color: #FF0000">GDPCAP</span>: T.Test.Statistic=-11.937, T.Test.PValue=0.000
+    * <span style="color: #FF0000">EPISCO</span>: T.Test.Statistic=-11.789, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">LIFEXP</span>: T.Test.Statistic=-10.979, T.Test.PValue=0.000  
+    * <span style="color: #FF0000">TUBINC</span>: T.Test.Statistic=+9.609, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">DTHCMD</span>: T.Test.Statistic=+8.376, T.Test.PValue=0.000 
+    * <span style="color: #FF0000">CO2EMI</span>: T.Test.Statistic=-7.031, T.Test.PValue=0.000  
+    * <span style="color: #FF0000">URBPOP</span>: T.Test.Statistic=-6.541, T.Test.PValue=0.000   
+    * <span style="color: #FF0000">POPGRO</span>: T.Test.Statistic=+4.905, T.Test.PValue=0.000
+    * <span style="color: #FF0000">GHGEMI</span>: T.Test.Statistic=-2.243, T.Test.PValue=0.026
 
 
 ```python
